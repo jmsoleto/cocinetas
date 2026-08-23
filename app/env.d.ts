@@ -9,12 +9,24 @@
  * Declararlas aquí convierte el entorno en una contrata explícita y versionada:
  * los tipos dejan de depender de qué tenga cada quien en su máquina, y este
  * fichero sirve además de lista de lo que hay que cargar como secret al
- * desplegar. */
+ * desplegar.
+ *
+ * Se aumentan los DOS interfaces, porque no son el mismo: `Cloudflare.Env` es
+ * contra el que se tipa el `env` que se importa de "cloudflare:workers" —el que
+ * usa la aplicación— y el `Env` global es el del `ExportedHandler` en
+ * workers/app.ts. Aumentar solo uno deja el otro sin las variables. */
 declare global {
+  namespace Cloudflare {
+    interface Env {
+      /** URL de la API de Supabase. En local, `supabase status` → API_URL. */
+      SUPABASE_URL: string;
+      /** Clave pública de Supabase. En local, `supabase status` → ANON_KEY. */
+      SUPABASE_ANON_KEY: string;
+    }
+  }
+
   interface Env {
-    /** URL de la API de Supabase. En local, `supabase status` → API_URL. */
     SUPABASE_URL: string;
-    /** Clave pública de Supabase. En local, `supabase status` → ANON_KEY. */
     SUPABASE_ANON_KEY: string;
   }
 }

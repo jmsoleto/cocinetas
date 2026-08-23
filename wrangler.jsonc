@@ -6,7 +6,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "cocinetas",
   "compatibility_flags": ["nodejs_compat"],
-	"compatibility_date": "2026-08-20",
+  "compatibility_date": "2026-08-20",
   "main": "./workers/app.ts",
   "observability": {
     "enabled": true,
