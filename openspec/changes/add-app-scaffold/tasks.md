@@ -1,6 +1,6 @@
 ## 1. Herramientas y proyecto base
 
-- [ ] 1.1 Instalar Docker Desktop y la CLI de Supabase; verificar con `docker info` y `supabase --version` respondiendo sin error
+- [x] 1.1 Instalar Docker Desktop y la CLI de Supabase; verificar con `docker info` y `supabase --version` respondiendo sin error
 - [x] 1.2 Crear la aplicación React Router v8 en modo framework con la plantilla de Cloudflare, en la raíz del repositorio sin pisar `openspec/`; verificar que `npm run dev` sirve la página por defecto en el navegador
 - [x] 1.3 Endurecer `tsconfig.json` (`strict`, `noUncheckedIndexedAccess`) y añadir lint y formato; verificar que `npm run typecheck` y el lint pasan en limpio sobre el proyecto recién creado
 - [x] 1.4 Añadir `.gitignore` cubriendo `node_modules`, `.dev.vars`, `.wrangler`, `build` y los artefactos de Supabase; verificar que `git status` no lista ninguno de ellos
@@ -22,11 +22,11 @@
 
 ## 4. Supabase en local
 
-- [ ] 4.1 `supabase init` y `supabase start`; verificar que el Studio local y el buzón Mailpit abren en sus puertos
-- [ ] 4.2 Escribir la migración `0001_profiles.sql`: tabla `profiles` con clave foránea a `auth.users`, columna de nombre, RLS activado y políticas que limiten lectura y escritura al propio usuario; verificar con `supabase db reset` que la migración aplica desde cero sin error
-- [ ] 4.3 Añadir a la misma migración el trigger sobre alta en `auth.users` que crea el perfil con el nombre recibido en el registro; verificar con un alta de prueba desde el Studio que la fila de `profiles` aparece sola
-- [ ] 4.4 Comprobar el aislamiento por RLS: verificar, autenticado como un usuario de prueba, que una consulta al perfil de otro usuario devuelve cero filas
-- [ ] 4.5 Crear `.dev.vars` con `SUPABASE_URL` y `SUPABASE_ANON_KEY` apuntando a la instancia local; verificar que `npm run dev` arranca leyéndolas y que `.dev.vars` no aparece en `git status`
+- [x] 4.1 `supabase init` y `supabase start`; verificar que el Studio local y el buzón Mailpit abren en sus puertos
+- [x] 4.2 Escribir la migración `0001_profiles.sql`: tabla `profiles` con clave foránea a `auth.users`, columna de nombre, RLS activado y políticas que limiten lectura y escritura al propio usuario; verificar con `supabase db reset` que la migración aplica desde cero sin error
+- [x] 4.3 Añadir a la misma migración el trigger sobre alta en `auth.users` que crea el perfil con el nombre recibido en el registro; verificar con un alta de prueba desde el Studio que la fila de `profiles` aparece sola
+- [x] 4.4 Comprobar el aislamiento por RLS: verificar, autenticado como un usuario de prueba, que una consulta al perfil de otro usuario devuelve cero filas
+- [x] 4.5 Crear `.dev.vars` con `SUPABASE_URL` y `SUPABASE_ANON_KEY` apuntando a la instancia local; verificar que `npm run dev` arranca leyéndolas y que `.dev.vars` no aparece en `git status`
 
 ## 5. Sesión y autenticación
 
