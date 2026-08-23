@@ -38,7 +38,7 @@ Restricciones externas: alojamiento gratuito, un puñado de usuarios, e instalac
 
 Next.js sobre Vercel es el camino más documentado y `@supabase/ssr` tiene guías de primera clase para él, pero el tier gratuito de Vercel es _hobby, no comercial_: si Cocinetas llegara a ser algo, se empieza con deuda de migración. Cloudflare Workers no tiene esa cláusula y su tier gratuito (100.000 peticiones al día) sobra para el volumen previsto.
 
-React Router v7 gana además por encaje conceptual: `loader` y `action` reciben la `Request` y devuelven la `Response`, que es exactamente la forma que necesita una sesión basada en cookies (leer `Cookie` de la petición, escribir `Set-Cookie` en la respuesta). Al ser Vite por debajo, `vite-plugin-pwa` funciona sin adaptaciones.
+React Router gana además por encaje conceptual: `loader` y `action` reciben la `Request` y devuelven la `Response`, que es exactamente la forma que necesita una sesión basada en cookies (leer `Cookie` de la petición, escribir `Set-Cookie` en la respuesta). Al ser Vite por debajo, `vite-plugin-pwa` funciona sin adaptaciones.
 
 TanStack Start es elegante pero más joven, con más rotación de API y menos material hecho para Supabase. Astro se descarta porque el modo cocina y el importador son pantallas con estado, y el modelo de islas estorba ahí.
 
@@ -62,7 +62,7 @@ En Workers no hay estado global entre peticiones, así que **cada `loader` y cad
 
 El esquema vive en `supabase/migrations/*.sql`, versionado en git. Ninguna migración se aplica a mano desde el panel de Supabase: se escribe el fichero, se prueba con `supabase db reset` en local, y se sube con `supabase db push`.
 
-**Coste asumido:** Docker es requisito para desarrollar. Ni Docker ni la CLI de Supabase están instalados en la máquina actual; instalarlos es la primera tarea.
+**Coste asumido:** Docker es requisito para desarrollar. Estado real en la máquina, al implementar: la CLI de Supabase (2.115.0) quedó instalada, y Docker Desktop 4.87.0 también, pero copiada desde el DMG y por tanto en cuarentena de macOS, lo que hace que se lance translocada. Queda pendiente `xattr -dr com.apple.quarantine /Applications/Docker.app` y una primera apertura a mano, que es donde instala su helper privilegiado.
 
 ### D4 — Confirmación de correo activada, con el servicio integrado de Supabase
 
