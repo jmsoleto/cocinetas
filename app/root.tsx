@@ -8,6 +8,7 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import marca from "./marca.json";
 
 /* Orden deliberado: los tokens y el reset de Nocturne primero, la paleta miga
    encima —redefine los tokens y sanea las reglas escritas para fondo oscuro—,
@@ -23,6 +24,10 @@ export const links: Route.LinksFunction = () => [
     href: "https://fonts.gstatic.com",
     crossOrigin: "anonymous",
   },
+  { rel: "manifest", href: "/manifest.webmanifest" },
+  /* iOS ignora por completo los iconos del manifest y usa este. Sin él, el
+     icono de la pantalla de inicio sería una miniatura de la página. */
+  { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -36,6 +41,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
           name="viewport"
           content="width=device-width, initial-scale=1, viewport-fit=cover"
         />
+        {/* Tiñe la barra de estado en Android. El valor sale de marca.json
+            para no repetir el hexadecimal ni saltarse la regla de adherencia. */}
+        <meta name="theme-color" content={marca.colorTema} />
+        {/* iOS no lee el manifest para nada de esto: necesita sus etiquetas.
+            `capable` abre la aplicación sin barra de direcciones; el estilo de
+            barra `default` deja el texto oscuro, que es lo que pide un fondo
+            claro como el de miga. */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        {/* El estándar es el de arriba; este lo mantienen las versiones de iOS
+            que aún no leen el otro. Chrome avisa de que está obsoleto, pero
+            quitarlo rompería la instalación en iOS antiguo. */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content={marca.nombreCorto} />
         <Meta />
         <Links />
       </head>

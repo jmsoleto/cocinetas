@@ -49,9 +49,9 @@
 
 ## 7. PWA instalable
 
-- [ ] 7.1 Instalar y configurar `vite-plugin-pwa`; verificar que el service worker se registra en el build de producción servido en local
-- [ ] 7.2 Diseñar los iconos a 192 y 512 píxeles más la variante `maskable` con zona de seguridad respetada; verificar la variante `maskable` contra una máscara circular sin que se corte nada significativo
-- [ ] 7.3 Escribir el manifest con `name: "Cocinetas"`, `display: "standalone"`, `orientation: "portrait"`, `start_url`, `scope` y `theme_color`/`background_color` a `#f7f1e8`; verificar en el panel Application de las herramientas de desarrollo que no reporta advertencias de instalabilidad
+- [x] 7.1 Instalar y configurar `vite-plugin-pwa`; verificar que el service worker se registra en el build de producción servido en local
+- [x] 7.2 Diseñar los iconos a 192 y 512 píxeles más la variante `maskable` con zona de seguridad respetada; verificar la variante `maskable` contra una máscara circular sin que se corte nada significativo
+- [x] 7.3 Escribir el manifest con `name: "Cocinetas"`, `display: "standalone"`, `orientation: "portrait"`, `start_url`, `scope` y `theme_color`/`background_color` a `#f7f1e8`; verificar en el panel Application de las herramientas de desarrollo que no reporta advertencias de instalabilidad
 - [ ] 7.4 Añadir en `root.tsx` las etiquetas propias de iOS (`apple-touch-icon`, `apple-mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style`) y el `<meta name="theme-color">`; verificar que el icono de la pantalla de inicio en iOS es el de Cocinetas y no una captura de la página
 
 ## 8. Producción y verificación de extremo a extremo
