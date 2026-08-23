@@ -24,7 +24,13 @@ export const links: Route.LinksFunction = () => [
     href: "https://fonts.gstatic.com",
     crossOrigin: "anonymous",
   },
-  { rel: "manifest", href: "/manifest.webmanifest" },
+  /* Solo en producción: vite-plugin-pwa genera el manifest al construir y no
+     lo sirve en desarrollo (devOptions desactivado, para que el service worker
+     no se meta en medio del recargado en caliente). Sin esta condición, cada
+     página de dev registra dos 404 en la consola — ruido que acaba tapando
+     errores de verdad. La instalabilidad se prueba contra el build, que es
+     donde se mide de todas formas. */
+  ...(import.meta.env.PROD ? [{ rel: "manifest", href: "/manifest.webmanifest" }] : []),
   /* iOS ignora por completo los iconos del manifest y usa este. Sin él, el
      icono de la pantalla de inicio sería una miniatura de la página. */
   { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },

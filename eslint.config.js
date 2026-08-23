@@ -37,6 +37,8 @@ export default tseslint.config(
       ".react-router/**",
       "node_modules/**",
       "worker-configuration.d.ts",
+      // Ficheros que escribe la CLI de Supabase al arrancar los contenedores.
+      "supabase/.temp/**",
     ],
   },
   js.configs.recommended,

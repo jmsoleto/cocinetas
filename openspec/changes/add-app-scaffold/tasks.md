@@ -30,22 +30,22 @@
 
 ## 5. Sesión y autenticación
 
-- [ ] 5.1 Instalar `@supabase/supabase-js` y `@supabase/ssr`, y añadir `nodejs_compat` a `compatibility_flags` en `wrangler.jsonc`; verificar que el build de producción (`npm run build`) termina sin error
-- [ ] 5.2 Escribir `app/lib/supabase.server.ts` con `createSupabaseServerClient(request)` que devuelva `{ supabase, headers }` construido por petición; verificar desde un loader de prueba que lee las cookies de la petición entrante
-- [ ] 5.3 Escribir `app/lib/session.server.ts` con `getUser(request)` y `requireUser(request)`, este último redirigiendo a `/entrar` cuando no hay sesión; verificar que una petición sin cookies a una ruta protegida responde 302 a `/entrar`
-- [ ] 5.4 Implementar `/registro` (formulario de correo, contraseña y nombre + action de alta), con los mensajes de error en español y conservando correo y nombre al fallar; verificar que un alta correcta deja el correo esperando en Mailpit
-- [ ] 5.5 Añadir a `/registro` los casos de error: correo ya registrado, correo mal formado, contraseña corta, nombre vacío; verificar cada uno manualmente y comprobar que el de correo duplicado no revela que la cuenta existe
-- [ ] 5.6 Implementar `/entrar` con el mensaje de error genérico único para credenciales inválidas; verificar que contraseña equivocada y correo inexistente producen exactamente el mismo texto
-- [ ] 5.7 Comprobar el bloqueo por correo sin confirmar: verificar que una cuenta recién creada y no confirmada no puede iniciar sesión, y que tras pulsar el enlace de Mailpit sí puede
-- [ ] 5.8 Implementar `/salir` como action que cierra sesión y limpia las cookies; verificar que tras cerrar sesión el botón de atrás del navegador no devuelve el contenido protegido
-- [ ] 5.9 Propagar las `headers` devueltas por el cliente en todas las respuestas de rutas autenticadas; verificar que una sesión se mantiene activa tras recargar repetidamente y que las cookies se reescriben cuando toca renovar
-- [ ] 5.10 Redirigir a la pantalla principal a quien solicite `/entrar` o `/registro` teniendo ya sesión; verificar ambas rutas con sesión iniciada
+- [x] 5.1 Instalar `@supabase/supabase-js` y `@supabase/ssr`, y añadir `nodejs_compat` a `compatibility_flags` en `wrangler.jsonc`; verificar que el build de producción (`npm run build`) termina sin error
+- [x] 5.2 Escribir `app/lib/supabase.server.ts` con `createSupabaseServerClient(request)` que devuelva `{ supabase, headers }` construido por petición; verificar desde un loader de prueba que lee las cookies de la petición entrante
+- [x] 5.3 Escribir `app/lib/session.server.ts` con `getUser(request)` y `requireUser(request)`, este último redirigiendo a `/entrar` cuando no hay sesión; verificar que una petición sin cookies a una ruta protegida responde 302 a `/entrar`
+- [x] 5.4 Implementar `/registro` (formulario de correo, contraseña y nombre + action de alta), con los mensajes de error en español y conservando correo y nombre al fallar; verificar que un alta correcta deja el correo esperando en Mailpit
+- [x] 5.5 Añadir a `/registro` los casos de error: correo ya registrado, correo mal formado, contraseña corta, nombre vacío; verificar cada uno manualmente y comprobar que el de correo duplicado no revela que la cuenta existe
+- [x] 5.6 Implementar `/entrar` con el mensaje de error genérico único para credenciales inválidas; verificar que contraseña equivocada y correo inexistente producen exactamente el mismo texto
+- [x] 5.7 Comprobar el bloqueo por correo sin confirmar: verificar que una cuenta recién creada y no confirmada no puede iniciar sesión, y que tras pulsar el enlace de Mailpit sí puede
+- [x] 5.8 Implementar `/salir` como action que cierra sesión y limpia las cookies; verificar que tras cerrar sesión el botón de atrás del navegador no devuelve el contenido protegido
+- [x] 5.9 Propagar las `headers` devueltas por el cliente en todas las respuestas de rutas autenticadas; verificar que una sesión se mantiene activa tras recargar repetidamente y que las cookies se reescriben cuando toca renovar
+- [x] 5.10 Redirigir a la pantalla principal a quien solicite `/entrar` o `/registro` teniendo ya sesión; verificar ambas rutas con sesión iniciada
 
 ## 6. Pantalla de saludo
 
-- [ ] 6.1 Implementar `/` como ruta protegida cuyo loader lee el perfil y renderiza «Hola, `<nombre>`» junto a un control de cerrar sesión; verificar en el navegador con una cuenta de prueba
-- [ ] 6.2 Comprobar que el saludo llega renderizado en servidor: verificar con `curl` incluyendo la cookie de sesión que el nombre del usuario aparece en el HTML de la respuesta
-- [ ] 6.3 Comprobar el funcionamiento sin JavaScript: verificar con JavaScript deshabilitado que la página se lee y que los formularios de `/entrar` y `/registro` siguen enviándose
+- [x] 6.1 Implementar `/` como ruta protegida cuyo loader lee el perfil y renderiza «Hola, `<nombre>`» junto a un control de cerrar sesión; verificar en el navegador con una cuenta de prueba
+- [x] 6.2 Comprobar que el saludo llega renderizado en servidor: verificar con `curl` incluyendo la cookie de sesión que el nombre del usuario aparece en el HTML de la respuesta
+- [x] 6.3 Comprobar el funcionamiento sin JavaScript: verificar con JavaScript deshabilitado que la página se lee y que los formularios de `/entrar` y `/registro` siguen enviándose
 
 ## 7. PWA instalable
 
@@ -60,4 +60,4 @@
 - [ ] 8.2 Cargar `SUPABASE_URL` y `SUPABASE_ANON_KEY` como secrets de Wrangler y desplegar; verificar que la aplicación desplegada conecta con Supabase y no lanza errores de compatibilidad de Node en los logs del Worker
 - [ ] 8.3 Recorrer el ciclo completo desde un teléfono Android real: registrar, confirmar el correo, entrar, ver el saludo, instalar desde el aviso del navegador, abrir la aplicación instalada y comprobar que sigue con la sesión iniciada
 - [ ] 8.4 Recorrer el ciclo completo desde un iPhone real con Safari, añadiendo la aplicación a la pantalla de inicio; verificar el icono, la ausencia de barra de direcciones, y **dejar anotado** si la aplicación instalada arranca sin sesión — es el riesgo del almacén de cookies separado y hay que confirmar si se materializa
-- [ ] 8.5 Escribir el `README.md` con los requisitos previos (Docker, CLI de Supabase), el arranque local paso a paso y el procedimiento de despliegue; verificar siguiéndolo desde un clon limpio del repositorio
+- [x] 8.5 Escribir el `README.md` con los requisitos previos (Docker, CLI de Supabase), el arranque local paso a paso y el procedimiento de despliegue; verificar siguiéndolo desde un clon limpio del repositorio

@@ -11,3 +11,6 @@ app/styles/nocturne.css
 openspec
 .claude
 .agents
+
+# Artefactos de la CLI de Supabase
+supabase/.temp
