@@ -32,7 +32,7 @@ Restricciones externas: alojamiento gratuito, un puñado de usuarios, e instalac
 
 ## Decisions
 
-### D1 — React Router v7 (framework mode) sobre Cloudflare Workers
+### D1 — React Router (framework mode) sobre Cloudflare Workers
 
 **Alternativas consideradas:** Next.js App Router sobre Vercel; TanStack Start; Astro con islas de React.
 
@@ -41,6 +41,8 @@ Next.js sobre Vercel es el camino más documentado y `@supabase/ssr` tiene guía
 React Router v7 gana además por encaje conceptual: `loader` y `action` reciben la `Request` y devuelven la `Response`, que es exactamente la forma que necesita una sesión basada en cookies (leer `Cookie` de la petición, escribir `Set-Cookie` en la respuesta). Al ser Vite por debajo, `vite-plugin-pwa` funciona sin adaptaciones.
 
 TanStack Start es elegante pero más joven, con más rotación de API y menos material hecho para Supabase. Astro se descarta porque el modo cocina y el importador son pantallas con estado, y el modelo de islas estorba ahí.
+
+**Versión, corregido durante la implementación:** este documento decía «React Router v7». La plantilla oficial de Cloudflare (`create-cloudflare --framework=react-router`) entrega **React Router v8**, y el repositorio `remix-run/react-router-templates` ya no tiene plantilla `cloudflare`. Se va con v8: es la versión actual del mismo enfoque —framework mode, `loader`/`action`, Vite, Workers— y fijar v7 sería elegir a propósito un major anterior. La decisión no cambia, solo el número.
 
 **Consecuencia operativa:** Workers necesita `compatibility_flags: ["nodejs_compat"]` en `wrangler.jsonc` para que el SDK de Supabase resuelva sus dependencias de Node.
 

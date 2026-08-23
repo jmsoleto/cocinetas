@@ -6,7 +6,7 @@ Este change monta el esqueleto completo —proyecto, estilos, base de datos, aut
 
 ## What Changes
 
-- **Proyecto**: aplicación React Router v7 (framework mode) con TypeScript y SSR, sobre Vite, desplegada en Cloudflare Workers.
+- **Proyecto**: aplicación React Router v8 (framework mode) con TypeScript y SSR, sobre Vite, desplegada en Cloudflare Workers.
 - **Design system**: se vendoriza `styles.css` de Nocturne sin modificar, y se le superpone el tema `miga` (paleta cálida clara) como única paleta de la aplicación. No hay conmutador de temas.
 - **Shell móvil**: la aplicación se dirige exclusivamente a móvil, con área segura (`env(safe-area-inset-*)`), altura `dvh` y ancho máximo de seguridad para que no se rompa si alguien la abre en un portátil.
 - **PWA instalable**: manifest, service worker, iconos (incluida variante `maskable`) y etiquetas `apple-*`, de modo que la aplicación se pueda añadir a la pantalla de inicio en Android y en iOS.

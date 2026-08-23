@@ -1,7 +1,7 @@
 ## 1. Herramientas y proyecto base
 
 - [ ] 1.1 Instalar Docker Desktop y la CLI de Supabase; verificar con `docker info` y `supabase --version` respondiendo sin error
-- [x] 1.2 Crear la aplicación React Router v7 en modo framework con la plantilla de Cloudflare, en la raíz del repositorio sin pisar `openspec/`; verificar que `npm run dev` sirve la página por defecto en el navegador
+- [x] 1.2 Crear la aplicación React Router v8 en modo framework con la plantilla de Cloudflare, en la raíz del repositorio sin pisar `openspec/`; verificar que `npm run dev` sirve la página por defecto en el navegador
 - [x] 1.3 Endurecer `tsconfig.json` (`strict`, `noUncheckedIndexedAccess`) y añadir lint y formato; verificar que `npm run typecheck` y el lint pasan en limpio sobre el proyecto recién creado
 - [x] 1.4 Añadir `.gitignore` cubriendo `node_modules`, `.dev.vars`, `.wrangler`, `build` y los artefactos de Supabase; verificar que `git status` no lista ninguno de ellos
 - [x] 1.5 Primer commit del esqueleto desnudo, antes de añadir nada propio, para tener un punto de retorno limpio
