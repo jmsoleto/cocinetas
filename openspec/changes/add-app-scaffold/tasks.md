@@ -56,8 +56,8 @@
 
 ## 8. Producción y verificación de extremo a extremo
 
-- [ ] 8.1 Crear el proyecto de Supabase en la nube y aplicar las migraciones con `supabase db push`; verificar en el panel que `profiles`, sus políticas y el trigger existen
-- [ ] 8.2 Cargar `SUPABASE_URL` y `SUPABASE_ANON_KEY` como secrets de Wrangler y desplegar; verificar que la aplicación desplegada conecta con Supabase y no lanza errores de compatibilidad de Node en los logs del Worker
+- [x] 8.1 Crear el proyecto de Supabase en la nube y aplicar las migraciones con `supabase db push`; verificar en el panel que `profiles`, sus políticas y el trigger existen
+- [x] 8.2 Cargar `SUPABASE_URL` y `SUPABASE_ANON_KEY` como secrets de Wrangler y desplegar; verificar que la aplicación desplegada conecta con Supabase y no lanza errores de compatibilidad de Node en los logs del Worker
 - [ ] 8.3 Recorrer el ciclo completo desde un teléfono Android real: registrar, confirmar el correo, entrar, ver el saludo, instalar desde el aviso del navegador, abrir la aplicación instalada y comprobar que sigue con la sesión iniciada
 - [ ] 8.4 Recorrer el ciclo completo desde un iPhone real con Safari, añadiendo la aplicación a la pantalla de inicio; verificar el icono, la ausencia de barra de direcciones, y **dejar anotado** si la aplicación instalada arranca sin sesión — es el riesgo del almacén de cookies separado y hay que confirmar si se materializa
 - [x] 8.5 Escribir el `README.md` con los requisitos previos (Docker, CLI de Supabase), el arranque local paso a paso y el procedimiento de despliegue; verificar siguiéndolo desde un clon limpio del repositorio
