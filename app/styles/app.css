@@ -1,0 +1,54 @@
+/* Shell de Cocinetas. Se encadena después de nocturne.css y miga.css, así que
+   aquí no se declara ningún valor: todo sale de los tokens. */
+
+/* La aplicación va a pantalla de teléfono en vertical. `dvh` en vez de `vh`
+   porque la barra de direcciones del navegador móvil aparece y desaparece al
+   desplazarse, y `vh` se mide contra la ventana mayor: con `vh` el contenido
+   se recorta y aparece un desplazamiento que no debería existir. */
+html,
+body {
+  min-height: 100dvh;
+}
+
+body {
+  /* El fondo lo pinta nocturne.css desde --color-bg; aquí solo se asegura que
+     cubra toda la ventana aunque el contenido sea corto. */
+  background-attachment: fixed;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* El armazón de la aplicación. En un teléfono ocupa el ancho completo; en una
+   ventana ancha se queda en una columna legible en vez de estirarse. El
+   escritorio no es un objetivo soportado, esto solo evita que se vea absurdo. */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: 30rem;
+  margin-inline: auto;
+
+  /* Áreas seguras: la muesca arriba, el indicador de gestos abajo, y los
+     bordes redondeados en horizontal. Sin esto la navegación inferior queda
+     debajo del indicador y deja de poder pulsarse. */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* El contenido que desplaza. La navegación inferior, cuando exista, irá fuera
+   de este bloque para quedarse fija. */
+.app-main {
+  flex: 1;
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Cocinetas se sirve en un solo tema: la paleta cálida clara `miga`. No hay
+   conmutador, y tampoco se sigue la preferencia del sistema — un teléfono en
+   modo oscuro debe ver exactamente los mismos colores. Declararlo evita que el
+   navegador pinte por su cuenta los controles nativos en oscuro. */
+:root {
+  color-scheme: light;
+}

@@ -1,0 +1,18 @@
+/* Todos los valores salen de los tokens; no hay ni un color ni una distancia
+   escrita a mano. Es la disciplina que el ESLint de adherencia vigila en TS/TSX
+   y que aquí se sostiene a mano. */
+.saludo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.titulo {
+  color: var(--color-accent);
+  margin: 0;
+}
+
+.entradilla {
+  color: var(--color-neutral-400);
+  margin: 0;
+}

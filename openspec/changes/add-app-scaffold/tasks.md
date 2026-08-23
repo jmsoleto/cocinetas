@@ -4,7 +4,7 @@
 - [x] 1.2 Crear la aplicación React Router v7 en modo framework con la plantilla de Cloudflare, en la raíz del repositorio sin pisar `openspec/`; verificar que `npm run dev` sirve la página por defecto en el navegador
 - [x] 1.3 Endurecer `tsconfig.json` (`strict`, `noUncheckedIndexedAccess`) y añadir lint y formato; verificar que `npm run typecheck` y el lint pasan en limpio sobre el proyecto recién creado
 - [x] 1.4 Añadir `.gitignore` cubriendo `node_modules`, `.dev.vars`, `.wrangler`, `build` y los artefactos de Supabase; verificar que `git status` no lista ninguno de ellos
-- [ ] 1.5 Primer commit del esqueleto desnudo, antes de añadir nada propio, para tener un punto de retorno limpio
+- [x] 1.5 Primer commit del esqueleto desnudo, antes de añadir nada propio, para tener un punto de retorno limpio
 
 ## 2. Despliegue temprano
 
@@ -13,12 +13,12 @@
 
 ## 3. Design system y shell móvil
 
-- [ ] 3.1 Copiar `_ds/nocturne-64a5de61-3365-4d57-a150-5aeee131088f/styles.css` del proyecto de Claude Design a `app/styles/nocturne.css` sin modificar una sola línea; verificar que el fichero copiado es idéntico al origen
-- [ ] 3.2 Escribir `app/styles/miga.css` con la redefinición de tokens de la decisión D5(a), y una cabecera que registre de qué proyecto de Claude Design y de qué fecha procede `nocturne.css`; verificar en el navegador que el fondo es `#f7f1e8` y el texto `#2c2521`
-- [ ] 3.3 Añadir a `miga.css` el saneado de las cuatro reglas de fondo oscuro de la tabla D5(b) (`.dialog-backdrop`, `.tag-accent`, `.tag-neutral`, `.tag-accent-2`); verificar con una página de prueba desechable que el fondo de diálogo oscurece y que el texto de las tres etiquetas se lee sobre su fondo
+- [x] 3.1 Copiar `_ds/nocturne-64a5de61-3365-4d57-a150-5aeee131088f/styles.css` del proyecto de Claude Design a `app/styles/nocturne.css` sin modificar una sola línea; verificar que el fichero copiado es idéntico al origen
+- [x] 3.2 Escribir `app/styles/miga.css` con la redefinición de tokens de la decisión D5(a), y una cabecera que registre de qué proyecto de Claude Design y de qué fecha procede `nocturne.css`; verificar en el navegador que el fondo es `#f7f1e8` y el texto `#2c2521`
+- [x] 3.3 Añadir a `miga.css` el saneado de las cuatro reglas de fondo oscuro de la tabla D5(b) (`.dialog-backdrop`, `.tag-accent`, `.tag-neutral`, `.tag-accent-2`); verificar con una página de prueba desechable que el fondo de diálogo oscurece y que el texto de las tres etiquetas se lee sobre su fondo
 - [ ] 3.4 Escribir `app/styles/app.css` con el shell de móvil: `100dvh` en las pantallas a página completa, ancho máximo de seguridad centrado, y `padding` desde `env(safe-area-inset-*)`; verificar en el simulador de un dispositivo con muesca que nada queda tapado
-- [ ] 3.5 Configurar `root.tsx` con `lang="es"` y `<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">`, y encadenar las tres hojas en orden `nocturne` → `miga` → `app`; verificar en las herramientas de desarrollo que los tokens resueltos son los de `miga` y no los de Nocturne
-- [ ] 3.6 Añadir la configuración de CSS Modules y un componente de prueba que consuma solo variables CSS; verificar que sus estilos se aplican con nombre de clase generado
+- [x] 3.5 Configurar `root.tsx` con `lang="es"` y `<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">`, y encadenar las tres hojas en orden `nocturne` → `miga` → `app`; verificar en las herramientas de desarrollo que los tokens resueltos son los de `miga` y no los de Nocturne
+- [x] 3.6 Añadir la configuración de CSS Modules y un componente de prueba que consuma solo variables CSS; verificar que sus estilos se aplican con nombre de clase generado
 
 ## 4. Supabase en local
 

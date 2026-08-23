@@ -19,3 +19,6 @@ worker-configuration.d.ts
 # Supabase (local)
 /supabase/.temp/
 /supabase/.branches/
+
+# Playwright MCP
+/.playwright-mcp/

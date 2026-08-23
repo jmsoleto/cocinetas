@@ -98,9 +98,9 @@ Los tokens `--app-page-grad` y `--app-shell-shadow` del prototipo **no se copian
 
 | Regla de Nocturne                                           | Qué hace bajo `miga`                                                                                            | Corrección                                    |
 | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| `.dialog-backdrop` usa `--color-neutral-900` al 50%         | `neutral-900` es casi blanco → **velo blanco en vez de scrim**                                                  | usar `--color-neutral-200` (el paso oscuro)   |
-| `.tag-accent`: fondo `accent-800`, texto `accent-100`       | fondo melocotón claro; `accent-100` no existe en `miga` y hereda el `#f5f4ff` de Nocturne → **texto invisible** | texto `--color-accent-200`                    |
-| `.tag-neutral`: fondo `neutral-800`, texto `neutral-100`    | mismo problema → **texto invisible**                                                                            | texto `--color-neutral-200`                   |
+| `.dialog-backdrop` usa `--color-neutral-900` al 50%         | `neutral-900` es casi blanco → el velo sale `#f2eade`, luminancia 0,830 contra el 0,885 del fondo: **un scrim que no separa nada** | `--color-neutral-200`, que lo baja a 0,274    |
+| `.tag-accent`: fondo `accent-800`, texto `accent-100`       | fondo melocotón claro; `accent-100` no existe en `miga` y hereda el `#f5f4ff` de Nocturne → **1,37:1, texto invisible** | texto `--color-accent-200` → 5,70:1           |
+| `.tag-neutral`: fondo `neutral-800`, texto `neutral-100`    | mismo problema → **1,39:1, texto invisible**                                                                    | texto `--color-neutral-200` → 9,28:1          |
 | `.tag-accent-2`: fondo `accent-2-800`, texto `accent-2-100` | ninguno de los dos existe en `miga`; hereda el índigo oscuro de Nocturne → **fuera de paleta**                  | definir el par sobre el verde oliva `#8a9a6f` |
 
 Ninguna de las cuatro se usa todavía, precisamente porque el prototipo no toca esas clases. Se corrigen ahora porque el día que se usen el síntoma será desconcertante y la causa está a tres capas de distancia.
