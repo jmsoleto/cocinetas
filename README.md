@@ -97,6 +97,8 @@ sistema: un teléfono en oscuro ve exactamente los mismos colores.
 
 ## Desplegar
 
+Desplegado en **https://cocinetas.cocinetas.workers.dev**
+
 ```bash
 npx wrangler login
 

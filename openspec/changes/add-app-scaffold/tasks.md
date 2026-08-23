@@ -8,8 +8,8 @@
 
 ## 2. Despliegue temprano
 
-- [ ] 2.1 Crear el Worker en Cloudflare y desplegar la aplicación tal cual; verificar que la URL `*.workers.dev` sirve la página y anotar la URL definitiva
-- [ ] 2.2 Confirmar que el HTML llega renderizado desde el servidor; verificar con `curl` a la URL desplegada que el marcado de la página viene en la respuesta y no lo pinta el cliente
+- [x] 2.1 Crear el Worker en Cloudflare y desplegar la aplicación tal cual; verificar que la URL `*.workers.dev` sirve la página y anotar la URL definitiva
+- [x] 2.2 Confirmar que el HTML llega renderizado desde el servidor; verificar con `curl` a la URL desplegada que el marcado de la página viene en la respuesta y no lo pinta el cliente
 
 ## 3. Design system y shell móvil
 
