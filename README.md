@@ -132,5 +132,9 @@ en `wrangler.jsonc`.
 ## Trabajar en esto
 
 Las decisiones y su porqué están en `openspec/`, no en la cabeza de nadie.
-Antes de tocar arquitectura, mira `openspec/changes/*/design.md`: explica qué se
-eligió, qué se descartó y por qué.
+
+- `openspec/specs/` — lo que el sistema debe hacer, en requisitos y escenarios.
+- `openspec/changes/archive/*/design.md` — qué se eligió, qué se descartó y por
+  qué. Léelo antes de tocar arquitectura.
+- **`openspec/PENDIENTE.md`** — lo que se dejó fuera a propósito, con el porqué
+  y lo que haría falta para cerrarlo. Léelo antes de proponer un change nuevo.
