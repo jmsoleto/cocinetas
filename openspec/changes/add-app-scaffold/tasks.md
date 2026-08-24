@@ -16,7 +16,7 @@
 - [x] 3.1 Copiar `_ds/nocturne-64a5de61-3365-4d57-a150-5aeee131088f/styles.css` del proyecto de Claude Design a `app/styles/nocturne.css` sin modificar una sola línea; verificar que el fichero copiado es idéntico al origen
 - [x] 3.2 Escribir `app/styles/miga.css` con la redefinición de tokens de la decisión D5(a), y una cabecera que registre de qué proyecto de Claude Design y de qué fecha procede `nocturne.css`; verificar en el navegador que el fondo es `#f7f1e8` y el texto `#2c2521`
 - [x] 3.3 Añadir a `miga.css` el saneado de las cuatro reglas de fondo oscuro de la tabla D5(b) (`.dialog-backdrop`, `.tag-accent`, `.tag-neutral`, `.tag-accent-2`); verificar con una página de prueba desechable que el fondo de diálogo oscurece y que el texto de las tres etiquetas se lee sobre su fondo
-- [ ] 3.4 Escribir `app/styles/app.css` con el shell de móvil: `100dvh` en las pantallas a página completa, ancho máximo de seguridad centrado, y `padding` desde `env(safe-area-inset-*)`; verificar en el simulador de un dispositivo con muesca que nada queda tapado
+- [x] 3.4 Escribir `app/styles/app.css` con el shell de móvil: `100dvh` en las pantallas a página completa, ancho máximo de seguridad centrado, y `padding` desde `env(safe-area-inset-*)`; verificar en el simulador de un dispositivo con muesca que nada queda tapado
 - [x] 3.5 Configurar `root.tsx` con `lang="es"` y `<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">`, y encadenar las tres hojas en orden `nocturne` → `miga` → `app`; verificar en las herramientas de desarrollo que los tokens resueltos son los de `miga` y no los de Nocturne
 - [x] 3.6 Añadir la configuración de CSS Modules y un componente de prueba que consuma solo variables CSS; verificar que sus estilos se aplican con nombre de clase generado
 
@@ -52,12 +52,12 @@
 - [x] 7.1 Instalar y configurar `vite-plugin-pwa`; verificar que el service worker se registra en el build de producción servido en local
 - [x] 7.2 Diseñar los iconos a 192 y 512 píxeles más la variante `maskable` con zona de seguridad respetada; verificar la variante `maskable` contra una máscara circular sin que se corte nada significativo
 - [x] 7.3 Escribir el manifest con `name: "Cocinetas"`, `display: "standalone"`, `orientation: "portrait"`, `start_url`, `scope` y `theme_color`/`background_color` a `#f7f1e8`; verificar en el panel Application de las herramientas de desarrollo que no reporta advertencias de instalabilidad
-- [ ] 7.4 Añadir en `root.tsx` las etiquetas propias de iOS (`apple-touch-icon`, `apple-mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style`) y el `<meta name="theme-color">`; verificar que el icono de la pantalla de inicio en iOS es el de Cocinetas y no una captura de la página
+- [x] 7.4 Añadir en `root.tsx` las etiquetas propias de iOS (`apple-touch-icon`, `apple-mobile-web-app-capable`, `apple-mobile-web-app-status-bar-style`) y el `<meta name="theme-color">`; verificar que el icono de la pantalla de inicio en iOS es el de Cocinetas y no una captura de la página
 
 ## 8. Producción y verificación de extremo a extremo
 
 - [x] 8.1 Crear el proyecto de Supabase en la nube y aplicar las migraciones con `supabase db push`; verificar en el panel que `profiles`, sus políticas y el trigger existen
 - [x] 8.2 Cargar `SUPABASE_URL` y `SUPABASE_ANON_KEY` como secrets de Wrangler y desplegar; verificar que la aplicación desplegada conecta con Supabase y no lanza errores de compatibilidad de Node en los logs del Worker
-- [ ] 8.3 Recorrer el ciclo completo desde un teléfono Android real: registrar, confirmar el correo, entrar, ver el saludo, instalar desde el aviso del navegador, abrir la aplicación instalada y comprobar que sigue con la sesión iniciada
-- [ ] 8.4 Recorrer el ciclo completo desde un iPhone real con Safari, añadiendo la aplicación a la pantalla de inicio; verificar el icono, la ausencia de barra de direcciones, y **dejar anotado** si la aplicación instalada arranca sin sesión — es el riesgo del almacén de cookies separado y hay que confirmar si se materializa
+- [x] 8.3 Recorrer el ciclo completo desde un teléfono Android real: registrar, confirmar el correo, entrar, ver el saludo, instalar desde el aviso del navegador, abrir la aplicación instalada y comprobar que sigue con la sesión iniciada
+- [x] 8.4 Recorrer el ciclo completo desde un iPhone real con Safari, añadiendo la aplicación a la pantalla de inicio; verificar el icono, la ausencia de barra de direcciones, y **dejar anotado** si la aplicación instalada arranca sin sesión — es el riesgo del almacén de cookies separado y hay que confirmar si se materializa
 - [x] 8.5 Escribir el `README.md` con los requisitos previos (Docker, CLI de Supabase), el arranque local paso a paso y el procedimiento de despliegue; verificar siguiéndolo desde un clon limpio del repositorio
