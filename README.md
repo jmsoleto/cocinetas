@@ -112,6 +112,23 @@ npx wrangler secret put SUPABASE_ANON_KEY
 npm run deploy
 ```
 
+### La Site URL, que va aparte
+
+`supabase/config.toml` configura **solo tu Supabase local**. La URL a la que
+lleva el enlace del correo de confirmación en producción es un ajuste del
+proyecto en la nube, y por defecto vale `http://localhost:3000` — o sea, un
+enlace roto para todo el que se registre.
+
+Está en **Authentication → URL Configuration** del panel:
+
+|               |                                           |
+| ------------- | ----------------------------------------- |
+| Site URL      | `https://cocinetas.cocinetas.workers.dev` |
+| Redirect URLs | lo mismo, y lo mismo con `/**`            |
+
+Si algún día pones dominio propio, hay que cambiarlo **aquí también**, no solo
+en `wrangler.jsonc`.
+
 ## Trabajar en esto
 
 Las decisiones y su porqué están en `openspec/`, no en la cabeza de nadie.

@@ -156,8 +156,24 @@ max_indexes = 5
 enabled = true
 # The base URL of your website. Used as an allow-list for redirects and for constructing URLs used
 # in emails.
-# El puerto de `npm run dev` (Vite), no el 3000 por defecto: si no, el enlace
-# de confirmación del correo deja a la persona en una página que no existe.
+# OJO: este fichero configura SOLO la instancia local que levanta
+# `supabase start`. NO se aplica al proyecto de la nube, ni siquiera al hacer
+# `supabase db push` — ese comando lleva migraciones, no configuración.
+#
+# La Site URL de producción vive aparte, en el panel del proyecto
+# (Authentication -> URL Configuration) o vía la API de gestión. Debe valer:
+#   https://cocinetas.cocinetas.workers.dev
+# y la lista de redirecciones permitidas, esa misma más "/**".
+#
+# Se aprendió por las malas: el correo de confirmación de producción llevaba a
+# localhost:3000 —el valor por defecto de todo proyecto nuevo— mientras aquí
+# ponía 5173 y parecía resuelto. La confirmación funcionaba; lo que quedaba
+# roto era el aterrizaje.
+#
+# `supabase config push` sí empujaría esto a la nube, pero empuja el fichero
+# ENTERO, incluidos SMTP falso y límites de desarrollo. No usarlo sin mirar.
+#
+# El puerto de `npm run dev` (Vite), no el 3000 por defecto.
 site_url = "http://localhost:5173"
 # The public URL that Auth serves on. Defaults to the API external URL with `/auth/v1` appended.
 # external_url = ""
