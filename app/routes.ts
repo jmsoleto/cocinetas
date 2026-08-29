@@ -7,4 +7,6 @@ export default [
   route("entrar", "routes/entrar.tsx"),
   route("registro", "routes/registro.tsx"),
   route("salir", "routes/salir.tsx"),
+  route("cocina", "routes/cocina.tsx"),
+  route("ingredientes", "routes/ingredientes.tsx"),
 ] satisfies RouteConfig;

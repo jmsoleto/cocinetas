@@ -9,3 +9,5 @@ export const RUTA_ENTRAR = "/entrar";
 export const RUTA_REGISTRO = "/registro";
 export const RUTA_SALIR = "/salir";
 export const RUTA_INICIO = "/";
+export const RUTA_COCINA = "/cocina";
+export const RUTA_INGREDIENTES = "/ingredientes";

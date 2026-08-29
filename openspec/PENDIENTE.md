@@ -52,7 +52,15 @@ renderizar texto.
 
 ---
 
-## Y una decisión que conviene tomar ANTES de la primera pantalla de recetas
+## ~~Y una decisión que conviene tomar ANTES de la primera pantalla de recetas~~
+
+> **RESUELTA el 2026-08-26.** El modelo de recetas e ingredientes está decidido
+> entero y escrito en `changes/archive/2026-08-29-add-pantry/design.md`, y el reparto en fases en
+> `ROADMAP.md`. Se mantiene el texto de abajo porque plantea bien el problema.
+> Dos matices sobre lo que decía: el catálogo es **privado de cada persona**, no
+> global, y **no lleva alias** — al ser propio se puede renombrar y fusionar, que
+> es lo que los alias venían a suplir. El razonamiento está en las decisiones D2
+> y D3 de ese diseño.
 
 No es trabajo aplazado, es una elección de modelo de datos que se vuelve cara
 después: **cómo se identifican los ingredientes**.

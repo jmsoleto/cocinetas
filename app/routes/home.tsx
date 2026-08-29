@@ -1,6 +1,7 @@
-import { Form, data } from "react-router";
+import { Form, Link, data } from "react-router";
 import type { Route } from "./+types/home";
 import { exigirUsuario } from "../lib/session.server";
+import { RUTA_COCINA } from "../rutas";
 import estilos from "./home.module.css";
 
 export function meta(_: Route.MetaArgs) {
@@ -30,8 +31,14 @@ export default function Home({ loaderData }: Route.ComponentProps) {
       <div className={estilos.saludo}>
         <h1 className={estilos.titulo}>Hola, {loaderData.nombre}</h1>
         <p className={estilos.entradilla}>
-          El esqueleto está montado. Aquí irá el recetario.
+          Empieza por contarme qué tienes en casa. Las recetas vienen después.
         </p>
+
+        <div className={estilos.acciones}>
+          <Link to={RUTA_COCINA} className="btn btn-primary btn-block">
+            Mi cocina
+          </Link>
+        </div>
 
         <div className={estilos.acciones}>
           <Form method="post" action="/salir">
