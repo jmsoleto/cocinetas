@@ -105,6 +105,11 @@ pantalla que solo lee.
 **Es movible.** No depende más que de que existan recetas finalizadas, así que
 puede adelantarse por delante de la 3 si en algún momento interesa más.
 
+**Pero no se empieza sin leer la entrada 4 de `PENDIENTE.md`.** Es la pantalla
+que más pide funcionar sin red —un móvil en la encimera, veinte minutos
+cocinando— y la que menos necesita el servidor. Si se construye asumiendo
+servidor, volver después cuesta el doble.
+
 ## 5 · Foto de la receta
 
 **Qué se entrega.** Una foto por receta. No hay fotos por paso.
@@ -149,6 +154,12 @@ Dos cosas que este change hereda del diseño y no puede replantearse:
 ---
 
 ## Fuera del reparto
+
+**Antes que nada, léete `PENDIENTE.md`.** Sus entradas 3 y 4 no son tareas de
+ninguna fase, pero condicionan a todas: producción está en Cloudflare y España
+bloquea por orden judicial rangos de IP de Cloudflare, y la aplicación no
+funciona sin red cuando un recetario debería. Ninguna de las dos urge hoy;
+las dos se encarecen cuanto más se construya encima sin tenerlas presentes.
 
 **El `?code=` de la confirmación de correo** sigue anotado en `PENDIENTE.md`.
 Son unas veinte líneas y hoy hace que todo el que se registra tenga que escribir
