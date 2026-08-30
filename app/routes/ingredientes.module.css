@@ -1,0 +1,98 @@
+.pantalla {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.titulo {
+  margin: 0;
+}
+
+.entradilla {
+  color: var(--color-neutral-400);
+  margin: 0;
+}
+
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ficha {
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-lg);
+}
+
+.cabecera {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+}
+
+.nombre {
+  text-transform: capitalize;
+  margin-right: auto;
+}
+
+.cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: 0 var(--space-4) var(--space-4);
+  border-top: 1px solid var(--color-divider);
+  padding-top: var(--space-3);
+}
+
+/* El campo se lleva el espacio que sobra y el botón se queda con el suyo: en
+   una pantalla de teléfono, un botón que se estira deja el campo inservible. */
+.fila {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.fila > .input,
+.fila > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.acciones {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.error {
+  background: var(--color-accent-800);
+  color: var(--color-accent-200);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.nota {
+  margin: 0;
+  color: var(--color-neutral-400);
+  font-size: 0.75rem;
+}
+
+.vacioTexto {
+  margin: 0;
+  color: var(--color-neutral-400);
+}
+
+.pie {
+  color: var(--color-neutral-400);
+  font-size: 0.875rem;
+  margin: 0;
+}

@@ -1,0 +1,16 @@
+build
+.react-router
+node_modules
+package-lock.json
+worker-configuration.d.ts
+
+# Artefactos importados del design system — se resincronizan, no se formatean
+app/styles/nocturne.css
+
+# Documentación de proceso y configuración de herramientas
+openspec
+.claude
+.agents
+
+# Artefactos de la CLI de Supabase
+supabase/.temp

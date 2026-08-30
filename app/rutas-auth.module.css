@@ -1,0 +1,46 @@
+.pantalla {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-6);
+  min-height: 100%;
+}
+
+.titulo {
+  margin: 0;
+}
+
+.entradilla {
+  color: var(--color-neutral-400);
+  margin: 0;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* El error de un campo y el error general comparten voz: texto sobre un
+   relleno tenue del acento, que en miga es el paso claro de la rampa. */
+.error {
+  background: var(--color-accent-800);
+  color: var(--color-accent-200);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+}
+
+.aviso {
+  background: var(--color-accent-2-800);
+  color: var(--color-accent-2-200);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+}
+
+.pie {
+  color: var(--color-neutral-400);
+  font-size: 0.875rem;
+  margin: 0;
+}

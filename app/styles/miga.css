@@ -1,0 +1,96 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   miga — la única paleta de Cocinetas.
+
+   PROCEDENCIA
+   `nocturne.css`, que esta hoja sobrescribe, es una copia literal del design
+   system Nocturne publicado en Claude Design (proyecto
+   10552572-f0d9-4962-b8ee-bc2a4ed39daf, ruta
+   _ds/nocturne-64a5de61-3365-4d57-a150-5aeee131088f/styles.css), traída el
+   2026-08-23. Ese fichero NO se edita nunca: cuando Nocturne cambie en Claude
+   Design se sustituye entero y lo propio sigue viviendo aquí.
+
+   Los valores de abajo salen de THEMES.miga en el prototipo Recetario.dc.html
+   del mismo proyecto.
+
+   OJO — miga INVIERTE la dirección de las rampas de Nocturne.
+   Nocturne pinta sobre fondo oscuro: neutral-100 es el paso más claro y
+   neutral-900 el más oscuro. miga pinta sobre fondo claro y va al revés:
+   neutral-200 es el más OSCURO y neutral-900 el más CLARO. No son el mismo
+   sistema en dos temperaturas, son dos convenciones opuestas sobre las mismas
+   variables. Cualquier regla que elija un paso de la rampa dando por hecho el
+   fondo oscuro queda del revés aquí; las que venían rotas en Nocturne están
+   corregidas más abajo.
+   ══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --color-bg: #f7f1e8;
+  --color-surface: #fffbf4;
+  --color-text: #2c2521;
+  --color-divider: color-mix(in srgb, #2c2521 14%, transparent);
+
+  /* Rampa neutra — 200 es el paso más oscuro, 900 el más claro. */
+  --color-neutral-200: #322a23;
+  --color-neutral-300: #4a3f34;
+  --color-neutral-400: #6b5c4a;
+  --color-neutral-500: #7d6c58;
+  --color-neutral-600: #9c8c78;
+  --color-neutral-700: #c4b5a1;
+  --color-neutral-800: #ddd0be;
+  --color-neutral-900: #ece2d5;
+
+  /* Acento: terracota. Misma inversión — 200 oscuro, 800 claro. */
+  --color-accent: #b25c3c;
+  --color-accent-200: #7a3a23;
+  --color-accent-300: #8f4529;
+  --color-accent-400: #b25c3c;
+  --color-accent-500: #c47454;
+  --color-accent-600: #d08e6f;
+  --color-accent-700: #e0b49c;
+  --color-accent-800: #eccdbb;
+
+  /* Segundo acento: verde oliva. A diferencia de Nocturne —que declara un
+     relleno derivado a máquina y pide tratarlo como un único acento— aquí sí
+     es una voz propia. El prototipo solo consume el paso 600; los pasos 200 y
+     800 se derivan aquí porque .tag-accent-2 los necesita (ver abajo). */
+  --color-accent-2-200: #3e4532;
+  --color-accent-2-600: #8a9a6f;
+  --color-accent-2-800: #e2e3d3;
+
+  /* Elevación sobre fondo claro: filo tenue más sombra tintada de tinta. */
+  --shadow-sm: 0 0 0 1px #e6dbcb;
+  --shadow-md: 0 0 0 1px #ddd0be, 0 6px 18px rgba(80, 60, 40, 0.12);
+  --shadow-lg: 0 0 0 1px #d3c3ad, 0 14px 32px rgba(80, 60, 40, 0.16);
+}
+
+/* ── Saneado de Nocturne para fondo claro ─────────────────────────────────
+   Estas cuatro reglas eligen pasos de rampa dando por hecho el fondo oscuro
+   de Nocturne. Con la rampa de miga invertida quedan del revés: donde debería
+   haber contraste hay dos claros superpuestos. Ninguna se usa todavía —el
+   prototipo no toca .tag ni .dialog—, pero el día que se usen el síntoma sería
+   desconcertante y la causa está tres capas más abajo. Se corrigen ahora.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Nocturne: color-mix(--color-neutral-900 50%). En miga el 900 es casi blanco,
+   así que el velo ACLARABA el contenido en vez de oscurecerlo. */
+.dialog-backdrop {
+  background: color-mix(in srgb, var(--color-neutral-200) 50%, transparent);
+}
+
+/* Nocturne pinta las etiquetas como fondo oscuro (-800) con texto claro (-100).
+   En miga el -800 es el paso claro, y el -100 ni siquiera existe: heredaba el
+   casi-blanco de Nocturne. Resultado: texto invisible. Se invierte el papel,
+   que es lo que pide un fondo claro: relleno tenue con texto oscuro. */
+.tag-accent {
+  color: var(--color-accent-200);
+}
+
+.tag-neutral {
+  color: var(--color-neutral-200);
+}
+
+/* De accent-2 miga solo declaraba el paso 600, así que fondo y texto caían
+   ambos al índigo de Nocturne: fuera de paleta por completo. */
+.tag-accent-2 {
+  background: var(--color-accent-2-800);
+  color: var(--color-accent-2-200);
+}
