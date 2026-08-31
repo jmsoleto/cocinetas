@@ -73,4 +73,4 @@ se puede escribir una receta entera; al acabar el 5 la fase está cerrada.
 - [x] 7.1 Recorrer a mano los escenarios de `specs/recipes` y del delta de `specs/ingredients` contra la aplicación en marcha, con dos cuentas distintas para los de aislamiento
 - [x] 7.2 Escribir una receta real de principio a fin —no de prueba— y terminarla. Es la única forma de saber si el guardado al vuelo y el arrastre se aguantan en uso
 - [x] 7.3 Pasar `npm run typecheck`, `npm run lint` y `npm run format:check` en limpio
-- [ ] 7.4 Comprobar el editor a ancho de teléfono y que nada queda bajo la muesca ni el indicador de gestos, con la lista de pasos lo bastante larga como para que haya que desplazarse mientras se arrastra
+- [x] 7.4 Comprobar el editor a ancho de teléfono y que nada queda bajo la muesca ni el indicador de gestos, con la lista de pasos lo bastante larga como para que haya que desplazarse mientras se arrastra
