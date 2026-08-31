@@ -1,7 +1,7 @@
 import { Form, Link, data } from "react-router";
 import type { Route } from "./+types/home";
 import { exigirUsuario } from "../lib/session.server";
-import { RUTA_COCINA } from "../rutas";
+import { RUTA_COCINA, RUTA_RECETAS } from "../rutas";
 import estilos from "./home.module.css";
 
 export function meta(_: Route.MetaArgs) {
@@ -31,11 +31,21 @@ export default function Home({ loaderData }: Route.ComponentProps) {
       <div className={estilos.saludo}>
         <h1 className={estilos.titulo}>Hola, {loaderData.nombre}</h1>
         <p className={estilos.entradilla}>
-          Empieza por contarme qué tienes en casa. Las recetas vienen después.
+          Tus recetas y lo que tienes en casa, para saber qué puedes cocinar hoy.
         </p>
 
+        {/* El recetario pasa a ser lo primero: era la promesa del producto y
+            hasta ahora esta pantalla mandaba a la despensa porque no había otra
+            cosa. La cocina sigue a un toque, que es donde se siembra el
+            vocabulario que el editor autocompleta. */}
         <div className={estilos.acciones}>
-          <Link to={RUTA_COCINA} className="btn btn-primary btn-block">
+          <Link to={RUTA_RECETAS} className="btn btn-primary btn-block">
+            Recetas
+          </Link>
+        </div>
+
+        <div className={estilos.acciones}>
+          <Link to={RUTA_COCINA} className="btn btn-secondary btn-block">
             Mi cocina
           </Link>
         </div>
