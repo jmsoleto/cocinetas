@@ -81,6 +81,36 @@ alter default privileges for role postgres in schema public
 alter default privileges for role postgres in schema public
   revoke execute on functions from public;
 
+-- ⚠ CORRECCIÓN, 2026-08-30 ─────────────────────────────────────────────────
+-- Esa última sentencia NO hace lo que este fichero dice que hace, y la frase
+-- «que nazcan limpias» de más arriba es cierta para las TABLAS y falsa para
+-- las FUNCIONES. Se descubrió al escribir la fase 2, comprobando en vez de
+-- confiar. Se anota aquí y no se borra lo anterior, porque el registro de lo
+-- que se creyó entonces es parte de la lección.
+--
+-- Medido en PostgreSQL 17.6, que es lo que sirve Supabase:
+--
+--   pg_default_acl (postgres, public, funciones)  →  {postgres=X/postgres}
+--   una TABLA creada acto seguido                 →  sin nada para anon   ✓
+--   una FUNCIÓN creada acto seguido               →  proacl NULA          ✗
+--                                                    y nula = el default de
+--                                                    PostgreSQL = PUBLIC tiene
+--                                                    EXECUTE
+--
+-- La prueba que lo cierra: añadiendo al default un `grant execute ... to
+-- service_role`, la función nueva sale
+-- `{=X/postgres, postgres=X/postgres, service_role=X/postgres}` — con el
+-- `=X/postgres` de PUBLIC todavía dentro. Es decir, la parte `grant` de los
+-- privilegios por defecto SÍ cuaja y la parte `revoke ... from public` queda
+-- anotada en el catálogo sin efecto sobre lo que se cree después. Reemitirla no
+-- cambia nada.
+--
+-- LO QUE HAY QUE HACER, y va sobre todo para la fase 6, que añade funciones:
+-- toda migración que cree una función tiene que escribir su propio
+-- `revoke execute on function ... from public` a mano. El default no protege.
+-- Ver `20260829020000_recipes.sql`, que lo hace y lo deja comprobado contra
+-- producción.
+
 -- Las secuencias se quedan como están, a propósito. No hay ninguna en `public`
 -- —todas las claves son uuid— y revocárselas a `authenticated` prepararía una
 -- trampa para el día que alguien cree una tabla con `bigserial`: el insert
