@@ -64,10 +64,10 @@ export type RecetaTerminada = RecetaResumen & { cobertura: Cobertura | null };
 
 /* Una receta entera en UNA sola consulta, no repartida en varias.
  *
- * No es una optimización: es lo que permitirá que la fase 4 cachee la receta
- * como un documento para seguirla sin red. Repartirla en tres consultas
- * obligaría a reconstruirla desde el service worker, que es donde eso deja de
- * ser barato. Está anotado en la D2 del diseño. */
+ * Así la receta llega siempre como un documento entero y coherente, en un solo
+ * viaje. La D2 del diseño de la fase 2 lo justificaba también por el modo sin
+ * conexión de la fase 4, pero esa razón ya no aplica: el 2026-11-09 se decidió
+ * no darle soporte (entrada 4 de `PENDIENTE.md`). */
 const RECETA_COMPLETA = `
   id, titulo, comensales, finalizada_en,
   recipe_ingredients ( id, orden, cantidad, nota, opcional, ingrediente_id,
@@ -233,8 +233,8 @@ export type EstadoLinea = "tiene" | "falta" | "supuesto" | "opcional";
  *
  * Va aparte de `leerReceta` y no dentro de `RECETA_COMPLETA`, a propósito (D3
  * del diseño): la receta solo cambia cuando la editas, la cobertura cada vez
- * que tocas la despensa. La fase 4 guardará la receta en el dispositivo, y no
- * debe llevarse dentro una cobertura que se queda vieja en cuanto compras algo.
+ * que tocas la despensa. Mezclarlas haría que la consulta de la receta dependiera
+ * de la despensa, y la regla de la cobertura vive en las vistas, no aquí.
  */
 export async function leerCoberturaDeReceta(
   supabase: SupabaseClient,

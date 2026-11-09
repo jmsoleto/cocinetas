@@ -20,7 +20,7 @@ fase está entregada.
 ## 2. Líneas opcionales en el editor
 
 - [x] 2.1 Leer `opcional` en `RECETA_COMPLETA` y en el tipo `LineaReceta`, y aceptar `opcional` en `guardarLinea` y en la intención `linea-guardar` del editor. Verificar por la red que marcar y desmarcar manda un booleano y la fila cambia
-- [ ] 2.2 Casilla «Opcional» por línea en el editor, que se envía en cuanto cambia y no con el retardo de los campos de texto, por un `fetcher` propio de la fila y con el aviso de error pegado a ella como los demás campos. Verificar que al recargar la casilla sigue como se dejó, y que un fallo de red se dice en vez de quedarse marcada en falso
+- [x] 2.2 Casilla «Opcional» por línea en el editor, que se envía en cuanto cambia y no con el retardo de los campos de texto, por un `fetcher` propio de la fila y con el aviso de error pegado a ella como los demás campos. Verificar que al recargar la casilla sigue como se dejó, y que un fallo de red se dice en vez de quedarse marcada en falso — **Salvedad:** el caso del fallo de red no se cumple. Tumba la pantalla entera en vez de avisar en la fila, y pasa igual con los campos de texto de la fase 2. Se aplazó a la entrada 6 de `PENDIENTE.md`
 - [x] 2.3 Verificar los escenarios de `specs/recipes` de este change: una línea nueva nace no opcional, la marca no pasa a otra receta ni al catálogo, y una receta con todas sus líneas opcionales se puede terminar
 
 ## 3. La lista: cobertura, orden y filtro
@@ -34,12 +34,12 @@ fase está entregada.
 
 - [x] 4.1 En el `loader` del detalle, leer `recipe_line_coverage` para esa receta en paralelo con `leerReceta`, **sin tocar `RECETA_COMPLETA` para meterle la cobertura** (D3). Unir por id de línea. Verificar que la consulta de la receta es la misma de antes, salvo la columna `opcional`
 - [x] 4.2 Etiqueta de texto por línea con su estado, y la misma cobertura que la lista en la cabecera. Decidir aquí el texto de las etiquetas (pregunta abierta del diseño), con el mismo vocabulario que la pantalla de Mi cocina. Verificar la receta del escenario «Una receta con de todo», y que la fracción del detalle coincide con la de la lista
-- [ ] 4.3 Verificar que el estado de cada línea se entiende sin color, con un lector de pantalla (VoiceOver), y que el detalle sigue siendo legible con JavaScript deshabilitado
+- [x] 4.3 Verificar que el estado de cada línea se entiende sin color, con un lector de pantalla (VoiceOver), y que el detalle sigue siendo legible con JavaScript deshabilitado
 - [x] 4.4 Estilos en CSS Modules sobre los tokens del design system, sin valores literales. Verificar que `npm run lint` pasa, incluidas las reglas de adherencia, y que la lista con etiquetas y faltantes se lee a ancho de teléfono sin desbordar
 - [x] 4.5 Actualizar `openspec/ROADMAP.md`: la fase 3 pasa a «ninguna tabla nueva; una columna (`recipe_ingredients.opcional`) y dos vistas», con el motivo de las dos vistas (D1), y se marca como hecha con el change al archivar. Verificar que el texto de la fase coincide con lo construido
 
 ## 5. Verificación final
 
 - [x] 5.1 Recorrer a mano todos los escenarios de `specs/recipe-coverage` contra la aplicación en marcha, con dos cuentas para los de privacidad. Cambiar la despensa y la marca de «se da por supuesto» desde Mi cocina y comprobar que la lista y el detalle lo reflejan al volver
-- [ ] 5.2 Con recetas reales, no de prueba: poner el filtro y comprobar que lo que sale es de verdad lo que se puede cocinar con lo que hay en casa
+- [x] 5.2 Con recetas reales, no de prueba: poner el filtro y comprobar que lo que sale es de verdad lo que se puede cocinar con lo que hay en casa
 - [x] 5.3 Pasar `npm run typecheck`, `npm run lint` y `npm run format:check` en limpio

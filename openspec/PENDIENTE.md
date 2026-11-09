@@ -111,7 +111,18 @@ en una decisión revisable en vez de en un cimiento.
 
 ---
 
-## 4. La aplicación no funciona sin red, y un recetario debería
+## ~~4. La aplicación no funciona sin red, y un recetario debería~~
+
+> **DECIDIDO el 2026-11-09: no se da soporte sin conexión.** Cocinetas asume
+> que siempre hay red. Ni la fase 4 ni ninguna otra guardan recetas en el
+> dispositivo ni encolan escrituras. El modo cocina se construye contra el
+> servidor, como el resto de la aplicación. Se deja el texto de abajo porque
+> explica bien lo que se descarta y por qué tentaba. Si algún día se reabre,
+> el coste que avisa el último párrafo ya se ha aceptado a conciencia.
+>
+> Consecuencia con la entrada 3: un bloqueo de IPs de Cloudflare durante un
+> partido sigue siendo «la aplicación no va», también a mitad de cocinar. Eso
+> deja la entrada 3 como el único remedio para ese caso.
 
 **Qué pasa hoy.** El esqueleto renderiza en el servidor y cada navegación
 necesita al servidor: la sesión viaja en cookies que solo el servidor lee, y cada
@@ -190,6 +201,35 @@ el diff vuelva a salir vacío. Mientras tanto, cualquier `db diff --linked` va a
 traer este ruido, y hay que leerlo sabiendo que está ahí. **No es ese el
 riesgo**: el riesgo es que ese ruido tape algún día un privilegio de verdad
 sobrante.
+
+---
+
+## 6. Un fallo de red mientras el editor guarda tumba la pantalla entera
+
+**Qué pasa hoy.** Si la red falla durante un guardado al vuelo del editor (un
+campo de texto, una casilla, cualquier `fetcher`), la pantalla entera salta a
+«Algo se ha torcido», el `ErrorBoundary` de `app/root.tsx`. No sale el aviso
+pegado al campo que falló. Se descubrió el 2026-11-09 al verificar la casilla de
+opcional de `add-recipe-coverage`, cortando los `POST` del editor con
+`route.abort('internetdisconnected')`. Pasa igual con «Cantidad», así que viene
+de la fase 2, no de la 3.
+
+**Por qué importa.** Incumple el escenario «Un cambio que no se puede guardar»
+de la spec de `recipes`: lo que se ve y lo que está guardado no pueden diferir
+sin que se diga, y aquí se dice tirando la pantalla. Con la decisión de la
+entrada 4 de no dar soporte sin conexión, una red que falla a ratos —el wifi que
+no llega a la cocina— es justamente el caso que más se va a ver.
+
+**Por qué se dejó.** No es de la fase 3, y arreglarlo toca el mecanismo de
+guardado de todo el editor, no una casilla.
+
+**Qué haría falta.** Que `useGuardadoAlVuelo` (`app/componentes/guardado.tsx`)
+trate el rechazo de la red como un error de su campo, igual que ya trata el
+`{ error }` que devuelve la acción. Probablemente con un `ErrorBoundary` en la
+ruta del editor, o capturando el fallo del `fetcher`, que hoy se propaga hasta
+la raíz. Hay que verificarlo con la misma prueba que lo descubrió: cortar los
+`POST` y comprobar que el aviso queda en la fila y que el indicador global no
+dice «Guardado».
 
 ---
 

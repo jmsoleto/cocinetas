@@ -82,7 +82,7 @@ después el editor. Adelanta el trabajo visual de la aplicación y prueba el mod
 con datos reales antes de construir la pantalla cara. La pega es que el
 entregable intermedio no lo puede usar nadie sin acceso a la base de datos.
 
-## 3 · Qué puedo hacer — el cruce
+## 3 · Qué puedo hacer — el cruce ✓ HECHA
 
 **Qué se entrega.** El «4/7 ingredientes», el «Tienes todo», y el filtro de
 «solo con lo que tengo en casa».
@@ -104,6 +104,9 @@ suficientemente grande sin ella.
   la lista y el detalle no pueden dar cifras distintas (D1 de
   `add-recipe-coverage`).
 - **Specs**: `recipe-coverage`, y una regla nueva en `recipes`
+- **Change**: `add-recipe-coverage`, archivado el 2026-11-09 en
+  `changes/archive/2026-11-09-add-recipe-coverage/`. Las specs están ya volcadas
+  en `specs/recipe-coverage/` y `specs/recipes/`, que son el contrato vigente.
 
 ## 4 · Modo cocina
 
@@ -119,10 +122,11 @@ pantalla que solo lee.
 **Es movible.** No depende más que de que existan recetas finalizadas, así que
 puede adelantarse por delante de la 3 si en algún momento interesa más.
 
-**Pero no se empieza sin leer la entrada 4 de `PENDIENTE.md`.** Es la pantalla
-que más pide funcionar sin red —un móvil en la encimera, veinte minutos
-cocinando— y la que menos necesita el servidor. Si se construye asumiendo
-servidor, volver después cuesta el doble.
+**Se construye contra el servidor, sin modo sin conexión.** Es la pantalla que
+más lo pediría —un móvil en la encimera, veinte minutos cocinando—, pero el
+2026-11-09 se decidió que Cocinetas asume red siempre (entrada 4 de
+`PENDIENTE.md`). Construirlo así hace caro añadir el modo sin conexión después,
+y ese coste se ha aceptado a conciencia.
 
 ## 5 · Foto de la receta
 
@@ -169,11 +173,11 @@ Dos cosas que este change hereda del diseño y no puede replantearse:
 
 ## Fuera del reparto
 
-**Antes que nada, léete `PENDIENTE.md`.** Sus entradas 3 y 4 no son tareas de
-ninguna fase, pero condicionan a todas: producción está en Cloudflare y España
-bloquea por orden judicial rangos de IP de Cloudflare, y la aplicación no
-funciona sin red cuando un recetario debería. Ninguna de las dos urge hoy;
-las dos se encarecen cuanto más se construya encima sin tenerlas presentes.
+**Antes que nada, léete `PENDIENTE.md`.** Su entrada 3 no es tarea de ninguna
+fase, pero condiciona a todas: producción está en Cloudflare y España bloquea
+por orden judicial rangos de IP de Cloudflare. No urge hoy, y se encarece cuanto
+más se construya encima sin tenerla presente. La entrada 4, el modo sin
+conexión, ya no está pendiente: se decidió no darle soporte.
 
 **El `?code=` de la confirmación de correo** sigue anotado en `PENDIENTE.md`.
 Son unas veinte líneas y hoy hace que todo el que se registra tenga que escribir

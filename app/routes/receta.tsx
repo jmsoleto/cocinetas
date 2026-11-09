@@ -18,8 +18,8 @@ export function meta({ loaderData }: Route.MetaArgs) {
 export async function loader({ request, params }: Route.LoaderArgs) {
   const { supabase, headers } = await exigirUsuario(request);
   /* Dos lecturas en paralelo y no una: la receta, siempre con la misma
-     consulta, y lo que tienes de ella aparte. La fase 4 guardará la receta en
-     el dispositivo, y la cobertura cambia cada vez que tocas la despensa (D3). */
+     consulta, y lo que tienes de ella aparte, porque la cobertura cambia cada
+     vez que tocas la despensa y la receta no (D3). */
   const [receta, { porLinea, cobertura }] = await Promise.all([
     leerReceta(supabase, params.id),
     leerCoberturaDeReceta(supabase, params.id),
@@ -48,8 +48,7 @@ export default function Receta({ loaderData, actionData }: Route.ComponentProps)
 
   /* Todo esto llega renderizado desde el servidor y se lee sin que se ejecute
      una sola línea de JavaScript. Que el EDITOR no lo prometa no exime a esta
-     pantalla: `app-shell` exige que cualquier ruta sea legible, y además es la
-     que algún día habrá que poder seguir sin red. */
+     pantalla: `app-shell` exige que cualquier ruta sea legible. */
   return (
     <main className="app-main">
       <article className={estilos.pantalla}>
