@@ -49,7 +49,7 @@ con cuarenta recetas dentro.
   `changes/archive/2026-08-29-add-pantry/`. Las dos specs están ya volcadas en
   `specs/ingredients/` y `specs/pantry/`, que son el contrato vigente.
 
-## 2 · Recetario — escribir recetas a mano
+## 2 · Recetario — escribir recetas a mano ✓ HECHA
 
 **Qué se entrega.** El editor de recetas: crear desde cero, guardar como
 borrador, editar, finalizar. La lista de recetas con los borradores aparte, y la
@@ -72,6 +72,9 @@ propia: reutiliza este editor, precargado.
   `ingredients` y `pantry`: es la decisión D10 del diseño de la fase 1. Este
   documento los nombró en castellano por descuido hasta el 2026-08-30.
 - **Specs**: `recipes`
+- **Change**: `add-recipes`, archivado el 2026-08-31 en
+  `changes/archive/2026-08-31-add-recipes/`. La spec está ya volcada en
+  `specs/recipes/`, que es el contrato vigente.
 
 **Si se hace larga, aquí es donde partirla:** primero el modelo, la lista y el
 detalle —con dos o tres recetas metidas a mano por SQL para poder verlas—, y
