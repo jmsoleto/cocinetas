@@ -167,12 +167,52 @@ export async function eliminarIngrediente(
 
   if (!error) return BIEN;
 
-  /* La clave ajena de la despensa es `no action` a propósito: borrar algo que
-     sigue en uso tiene que fallar, no llevarse la entrada por delante. */
-  if (error.code === "23503") {
-    return {
-      error: "Ese ingrediente está en tu despensa. Quítalo de ahí antes de borrarlo.",
-    };
-  }
+  /* Las claves ajenas que apuntan aquí son `no action` a propósito: borrar algo
+     que sigue en uso tiene que fallar, no llevarse por delante la entrada de la
+     despensa ni la línea de una receta.
+     
+     Desde la fase 2 hay DOS motivos posibles, así que hay que averiguar cuál
+     es: decir «está en uso» sin decir dónde deja a la persona buscando a
+     ciegas. Se pregunta solo cuando ya ha fallado, que es cuando importa. */
+  if (error.code === "23503") return { error: await porQueEstaEnUso(supabase, id) };
   return { error: `No se pudo eliminar: ${error.message}` };
+}
+
+/** Por qué no se puede borrar un ingrediente: la despensa, una receta, o ambas. */
+async function porQueEstaEnUso(supabase: SupabaseClient, id: string): Promise<string> {
+  const [despensa, recetas] = await Promise.all([
+    supabase.from("pantry").select("ingrediente_id").eq("ingrediente_id", id).limit(1),
+    supabase
+      .from("recipe_ingredients")
+      .select("recipes ( titulo )")
+      .eq("ingrediente_id", id)
+      .limit(2),
+  ]);
+
+  const enDespensa = (despensa.data ?? []).length > 0;
+  const lineas = recetas.data ?? [];
+
+  if (enDespensa && lineas.length === 0) {
+    return "Ese ingrediente está en tu despensa. Quítalo de ahí antes de borrarlo.";
+  }
+
+  if (lineas.length > 0) {
+    /* Con el nombre de la receta cuando es una sola: es lo que convierte el
+       aviso en algo accionable en vez de en un «búscalo tú». */
+    const embed = lineas[0]?.recipes as unknown;
+    const primera = (Array.isArray(embed) ? embed[0] : embed) as
+      { titulo: string | null } | null | undefined;
+    const titulo = primera?.titulo?.trim();
+
+    const donde =
+      lineas.length === 1 && titulo
+        ? `lo usa la receta «${titulo}»`
+        : "lo usan algunas de tus recetas";
+
+    return enDespensa
+      ? `Ese ingrediente está en tu despensa y además ${donde}.`
+      : `No se puede borrar: ${donde}.`;
+  }
+
+  return "Ese ingrediente está en uso.";
 }

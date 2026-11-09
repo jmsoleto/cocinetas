@@ -23,6 +23,13 @@
 -- ni a `authenticated`, así que las tablas y funciones de las fases siguientes
 -- nacen limpias. Esto solo termina de limpiar las cuatro que ya existían.
 --
+-- ⚠ CORRECCIÓN, 2026-08-30: ese «y funciones» es falso. Los privilegios por
+-- defecto protegen las TABLAS pero no las FUNCIONES: una función nueva sigue
+-- naciendo ejecutable por PUBLIC, y por tanto por `anon`. El detalle medido
+-- está en la corrección de `20260829000000_privilegios_ingredients_pantry.sql`.
+-- Toda migración que cree una función tiene que revocarle `execute` a PUBLIC a
+-- mano.
+--
 -- QUÉ RIESGO HUBO
 -- Ninguno explotable, igual que antes. Las cuatro son `security invoker`,
 -- `anon` no tiene un solo privilegio sobre las tablas ni una política RLS, y

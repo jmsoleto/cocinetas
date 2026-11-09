@@ -1,0 +1,178 @@
+/* Ni un valor literal: todo sale de los tokens del design system. */
+
+.pantalla {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.volver {
+  font-size: 0.875rem;
+}
+
+.indicador {
+  font-size: 0.875rem;
+  color: var(--color-neutral-400);
+}
+
+/* El indicador cambia de color cuando hay algo sin guardar: si dijera
+   «Guardado» en gris y «Hay algo sin guardar» también en gris, nadie lo leería.
+   Los estados los pone el propio componente en data-estado. */
+.indicador [data-estado="error"] {
+  color: var(--color-accent-400);
+  font-weight: var(--font-heading-weight);
+}
+
+.indicador [data-estado="pendiente"] {
+  color: var(--color-accent-400);
+}
+
+.bloque {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.subtitulo {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-neutral-400);
+}
+
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.fila,
+.filaLevantada {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+
+/* Levantada mientras el dedo la lleva. Sin sombra grande ni giro: la lista se
+   reordena en vivo, así que lo único que hace falta es saber cuál se mueve. */
+.filaLevantada {
+  border-color: var(--color-accent-400);
+  opacity: 0.85;
+}
+
+/* touch-action lo pone el hook en el estilo en línea, porque sin él el
+   navegador se queda el gesto y hace scroll en vez de arrastrar. Aquí solo se
+   le da tamaño de objetivo táctil: un asa pequeña no se coge con el pulgar. */
+.asa {
+  flex: none;
+  min-width: var(--space-8);
+  min-height: var(--space-8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-sm);
+  color: var(--color-neutral-400);
+  cursor: grab;
+}
+
+.cuerpoFila {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.lineaCabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.ingrediente {
+  text-transform: capitalize;
+}
+
+.lineaCampos {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.lineaCampos > * {
+  flex: 1;
+  min-width: 0;
+}
+
+.anadir {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.anadir > input {
+  flex: 1;
+  min-width: 0;
+}
+
+.enlaces {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.leyenda {
+  padding: 0;
+  font-size: 0.875rem;
+  color: var(--color-neutral-400);
+}
+
+.enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 0.875rem;
+}
+
+.error {
+  background: var(--color-accent-800);
+  color: var(--color-accent-200);
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.nota {
+  color: var(--color-neutral-400);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Solo para lectores de pantalla: la región aria-live que anuncia el resultado
+   de mover con el teclado. No se puede usar display:none, que la silencia. */
+.oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

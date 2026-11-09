@@ -49,7 +49,7 @@ con cuarenta recetas dentro.
   `changes/archive/2026-08-29-add-pantry/`. Las dos specs están ya volcadas en
   `specs/ingredients/` y `specs/pantry/`, que son el contrato vigente.
 
-## 2 · Recetario — escribir recetas a mano
+## 2 · Recetario — escribir recetas a mano ✓ HECHA
 
 **Qué se entrega.** El editor de recetas: crear desde cero, guardar como
 borrador, editar, finalizar. La lista de recetas con los borradores aparte, y la
@@ -64,10 +64,17 @@ Toda receta nace borrador, venga de donde venga. «Crear desde cero» es un
 borrador vacío. Eso hace que la importación de la fase 6 no necesite pantalla
 propia: reutiliza este editor, precargado.
 
-- **Tablas**: `recetas`, `receta_ingredientes`, `pasos`, `paso_ingredientes`.
-  `recetas.origen_tipo` nace aquí valiendo `manual`; las columnas del vídeo no
+- **Tablas**: `recipes`, `recipe_ingredients`, `steps`, `step_ingredients`.
+  `recipes.origen_tipo` nace aquí valiendo `manual`; las columnas del vídeo no
   se crean hasta la fase 6.
+
+  Los nombres van en inglés y las columnas en español, como `profiles`,
+  `ingredients` y `pantry`: es la decisión D10 del diseño de la fase 1. Este
+  documento los nombró en castellano por descuido hasta el 2026-08-30.
 - **Specs**: `recipes`
+- **Change**: `add-recipes`, archivado el 2026-08-31 en
+  `changes/archive/2026-08-31-add-recipes/`. La spec está ya volcada en
+  `specs/recipes/`, que es el contrato vigente.
 
 **Si se hace larga, aquí es donde partirla:** primero el modelo, la lista y el
 detalle —con dos o tres recetas metidas a mano por SQL para poder verlas—, y
@@ -123,7 +130,7 @@ fase 2, que ya es la más cargada, lo escondería.
 **Por qué antes del vídeo.** Para que la extracción pueda quedarse un fotograma
 como foto de la receta. Al revés habría que reprocesar lo ya importado.
 
-- **Tablas**: una columna en `recetas`, un bucket privado y sus políticas.
+- **Tablas**: una columna en `recipes`, un bucket privado y sus políticas.
 - **Specs**: `recipe-photo`
 
 ## 6 · Importar desde vídeo
@@ -147,8 +154,8 @@ Dos cosas que este change hereda del diseño y no puede replantearse:
   ya tienes «aceite», y los duplicados no llegan de uno en uno sino de ocho en
   ocho.
 
-- **Tablas**: `recetas.origen_url`, `recetas.origen_datos`,
-  `pasos.segundo_video`.
+- **Tablas**: `recipes.origen_url`, `recipes.origen_datos`,
+  `steps.segundo_video`.
 - **Specs**: `video-import`
 
 ---

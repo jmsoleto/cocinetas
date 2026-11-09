@@ -9,4 +9,9 @@ export default [
   route("salir", "routes/salir.tsx"),
   route("cocina", "routes/cocina.tsx"),
   route("ingredientes", "routes/ingredientes.tsx"),
+  route("recetas", "routes/recetas.tsx"),
+  // El detalle es de las recetas terminadas y el editor de los borradores.
+  // Cada uno redirige al otro cuando la receta no es de las suyas.
+  route("recetas/:id", "routes/receta.tsx"),
+  route("recetas/:id/editar", "routes/receta.editar.tsx"),
 ] satisfies RouteConfig;

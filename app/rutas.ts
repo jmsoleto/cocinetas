@@ -11,3 +11,9 @@ export const RUTA_SALIR = "/salir";
 export const RUTA_INICIO = "/";
 export const RUTA_COCINA = "/cocina";
 export const RUTA_INGREDIENTES = "/ingredientes";
+export const RUTA_RECETAS = "/recetas";
+
+/* Con parámetro, así que funciones y no constantes. Se construyen aquí y no en
+   cada componente para que cambiar la forma de la URL sea un solo sitio. */
+export const rutaReceta = (id: string) => `/recetas/${id}`;
+export const rutaEditarReceta = (id: string) => `/recetas/${id}/editar`;
