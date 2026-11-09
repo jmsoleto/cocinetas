@@ -8,7 +8,7 @@ import {
   type EstadoLinea,
 } from "../lib/recetario.server";
 import { CuantoTienes, EstadoDeLinea } from "../componentes/cobertura";
-import { RUTA_RECETAS, rutaEditarReceta } from "../rutas";
+import { RUTA_RECETAS, rutaCocinar, rutaEditarReceta } from "../rutas";
 import estilos from "./receta.module.css";
 
 export function meta({ loaderData }: Route.MetaArgs) {
@@ -58,6 +58,12 @@ export default function Receta({ loaderData, actionData }: Route.ComponentProps)
             <p className={estilos.entradilla}>Para {receta.comensales} comensales</p>
           ) : null}
         </div>
+
+        {/* Lo que se hace con una receta terminada: cocinarla. Va arriba y como
+            botón principal; «Volver a borrador» sigue abajo y en segundo plano. */}
+        <Link to={rutaCocinar(receta.id)} className="btn btn-primary btn-block">
+          Cocinar
+        </Link>
 
         {actionData?.error ? <p className={estilos.error}>{actionData.error}</p> : null}
 

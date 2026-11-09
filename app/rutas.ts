@@ -22,3 +22,10 @@ export const RUTA_RECETAS_EN_CASA = `${RUTA_RECETAS}?${PARAM_SOLO}=${SOLO_EN_CAS
    cada componente para que cambiar la forma de la URL sea un solo sitio. */
 export const rutaReceta = (id: string) => `/recetas/${id}`;
 export const rutaEditarReceta = (id: string) => `/recetas/${id}/editar`;
+
+/* El modo cocina es UNA ruta y el paso va en la búsqueda, no en un segmento:
+   así cambiar de paso no vuelve a leer la receta (D1 de add-cook-mode). Sin
+   paso es «Antes de empezar»; los pasos empiezan en 1, como los lee una persona. */
+export const PARAM_PASO = "paso";
+export const rutaCocinar = (id: string, paso?: number) =>
+  paso ? `/recetas/${id}/cocinar?${PARAM_PASO}=${paso}` : `/recetas/${id}/cocinar`;
