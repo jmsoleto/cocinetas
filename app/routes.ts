@@ -14,4 +14,6 @@ export default [
   // Cada uno redirige al otro cuando la receta no es de las suyas.
   route("recetas/:id", "routes/receta.tsx"),
   route("recetas/:id/editar", "routes/receta.editar.tsx"),
+  // Solo lectura, de las terminadas. El paso va en `?paso=`, no en la ruta.
+  route("recetas/:id/cocinar", "routes/receta.cocinar.tsx"),
 ] satisfies RouteConfig;

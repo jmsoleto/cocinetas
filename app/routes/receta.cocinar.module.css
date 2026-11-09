@@ -1,0 +1,123 @@
+/* El modo cocina. Ni un valor literal de color ni de píxeles: todo sale de los
+   tokens. Los tamaños de letra van en rem, como en el resto de la aplicación. */
+
+.pantalla {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4) var(--space-4) 0;
+}
+
+.barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: var(--space-8);
+}
+
+.aviso {
+  font-size: 0.8125rem;
+  color: var(--color-neutral-400);
+}
+
+/* El desplazamiento vertical es del navegador, nativo y con su inercia; el
+   gesto horizontal se lo queda el deslizamiento (D3 del diseño). */
+.contenido {
+  flex: 1;
+  touch-action: pan-y;
+  padding: var(--space-6) 0 var(--space-8);
+}
+
+.seccion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.receta {
+  margin: 0;
+  color: var(--color-neutral-400);
+  font-size: 0.875rem;
+  text-transform: capitalize;
+}
+
+.encabezado {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-neutral-400);
+}
+
+/* Recibe el foco al cambiar de paso, solo para que el lector de pantalla lo
+   anuncie. No es un control, así que no se le pinta el anillo de foco. */
+.encabezado:focus {
+  outline: none;
+}
+
+.entradilla {
+  margin: 0;
+  color: var(--color-neutral-400);
+}
+
+/* Se lee a distancia de brazo, con el móvil apoyado en la encimera. */
+.texto {
+  margin: 0;
+  font-size: 1.375rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.ingredientes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.linea {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-divider);
+  font-size: 1.0625rem;
+}
+
+.cantidad {
+  font-weight: var(--font-heading-weight);
+}
+
+.ingrediente {
+  text-transform: capitalize;
+}
+
+.nota {
+  color: var(--color-neutral-400);
+}
+
+/* Fijos abajo y al alcance del pulgar: «Siguiente» está siempre en el mismo
+   sitio aunque el paso sea largo. Al quedarse pegados al borde de la ventana
+   pisarían el indicador de gestos, así que suman el área segura inferior:
+   `app-shell` la resuelve para el contenido que fluye, no para lo que se fija. */
+.controles {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3) 0 calc(var(--space-4) + env(safe-area-inset-bottom));
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-divider);
+}
+
+/* Grandes, para un dedo con prisa. Ocupan el ancho a partes iguales. */
+.control {
+  flex: 1;
+  min-height: calc(var(--space-8) * 2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.0625rem;
+  text-decoration: none;
+}
