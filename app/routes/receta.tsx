@@ -1,7 +1,13 @@
 import { Form, Link, data, redirect } from "react-router";
 import type { Route } from "./+types/receta";
 import { exigirUsuario } from "../lib/session.server";
-import { devolverABorrador, leerReceta } from "../lib/recetario.server";
+import {
+  devolverABorrador,
+  leerCoberturaDeReceta,
+  leerReceta,
+  type EstadoLinea,
+} from "../lib/recetario.server";
+import { CuantoTienes, EstadoDeLinea } from "../componentes/cobertura";
 import { RUTA_RECETAS, rutaEditarReceta } from "../rutas";
 import estilos from "./receta.module.css";
 
@@ -11,7 +17,13 @@ export function meta({ loaderData }: Route.MetaArgs) {
 
 export async function loader({ request, params }: Route.LoaderArgs) {
   const { supabase, headers } = await exigirUsuario(request);
-  const receta = await leerReceta(supabase, params.id);
+  /* Dos lecturas en paralelo y no una: la receta, siempre con la misma
+     consulta, y lo que tienes de ella aparte. La fase 4 guardará la receta en
+     el dispositivo, y la cobertura cambia cada vez que tocas la despensa (D3). */
+  const [receta, { porLinea, cobertura }] = await Promise.all([
+    leerReceta(supabase, params.id),
+    leerCoberturaDeReceta(supabase, params.id),
+  ]);
 
   if (!receta) throw data("Esta receta no existe.", { status: 404, headers });
 
@@ -20,7 +32,8 @@ export async function loader({ request, params }: Route.LoaderArgs) {
      las dos cosas. */
   if (!receta.finalizadaEn) throw redirect(rutaEditarReceta(receta.id), { headers });
 
-  return data({ receta }, { headers });
+  const estados: Record<string, EstadoLinea> = Object.fromEntries(porLinea);
+  return data({ receta, cobertura, estados }, { headers });
 }
 
 export async function action({ request, params }: Route.ActionArgs) {
@@ -31,7 +44,7 @@ export async function action({ request, params }: Route.ActionArgs) {
 }
 
 export default function Receta({ loaderData, actionData }: Route.ComponentProps) {
-  const { receta } = loaderData;
+  const { receta, cobertura, estados } = loaderData;
 
   /* Todo esto llega renderizado desde el servidor y se lee sin que se ejecute
      una sola línea de JavaScript. Que el EDITOR no lo prometa no exime a esta
@@ -50,7 +63,10 @@ export default function Receta({ loaderData, actionData }: Route.ComponentProps)
         {actionData?.error ? <p className={estilos.error}>{actionData.error}</p> : null}
 
         <section>
-          <h2 className={estilos.subtitulo}>Ingredientes</h2>
+          <div className={estilos.cabeceraIngredientes}>
+            <h2 className={estilos.subtitulo}>Ingredientes</h2>
+            {cobertura ? <CuantoTienes cobertura={cobertura} /> : null}
+          </div>
           <ul className={estilos.ingredientes}>
             {receta.lineas.map((linea) => (
               <li key={linea.id} className={estilos.linea}>
@@ -59,6 +75,14 @@ export default function Receta({ loaderData, actionData }: Route.ComponentProps)
                 ) : null}
                 <span className={estilos.ingrediente}>{linea.ingrediente}</span>
                 {linea.nota ? <span className={estilos.nota}>{linea.nota}</span> : null}
+                {/* Lo que se da por supuesto se ve como supuesto, no como
+                    comprobado: así un «Tienes todo» no promete el aceite que
+                    se acabó ayer. */}
+                {linea.id in estados ? (
+                  <span className={estilos.estado}>
+                    <EstadoDeLinea estado={estados[linea.id] as EstadoLinea} />
+                  </span>
+                ) : null}
               </li>
             ))}
           </ul>

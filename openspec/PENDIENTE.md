@@ -151,6 +151,48 @@ cuesta el doble.
 
 ---
 
+## 5. Los privilegios de producción no coinciden con los de las migraciones
+
+**Qué pasa hoy.** El 2026-11-09, al preparar la subida de `add-recipe-coverage`,
+`supabase db diff --linked` mostró diferencias de privilegios entre producción y
+lo que producen las migraciones en una base limpia. Ninguna es de ese change:
+
+- `service_role` tiene **todos** los privilegios sobre las siete tablas de
+  `public` (`delete, insert, maintain, references, select, trigger, truncate,
+  update`). En una base limpia solo tiene `Dxtm`, así que no tiene `select` ni
+  escritura.
+- Los privilegios por defecto de `postgres` en `public` son distintos. En
+  producción conceden `select, update, usage` sobre secuencias a `anon`,
+  `authenticated` y `service_role`, `execute` sobre funciones a `service_role`, y
+  todo sobre tablas a `service_role`. En local, las migraciones dejan esos
+  defaults recortados.
+- `anon` y `authenticated` pueden ejecutar `crear_perfil_para_usuario_nuevo()` y
+  `tocar_actualizado_en()`.
+
+**Por qué no urge.** Lo de `anon` no se puede aprovechar: las dos son funciones
+de trigger, PostgREST no las expone (llamarlas por `/rpc` da `PGRST202`) y
+PostgreSQL se niega a ejecutar una función de trigger fuera de un trigger. A
+`anon` y `authenticated` no les sobra nada sobre las tablas. Lo de
+`service_role` no amplía nada, porque ese rol se salta la RLS de todas formas y
+la aplicación no lo usa. Las vistas de la fase 3 tampoco están afectadas: su
+migración revoca y concede a mano, y está comprobado contra producción con la
+clave anónima.
+
+**Lo que no se sabe.** Si esta diferencia existía antes o apareció cuando
+Supabase pausó el proyecto por inactividad y se reactivó ese mismo día. La
+fase 2 hizo el mismo `db diff` antes de su `db push` y no anotó nada, lo que
+apunta a la reactivación, pero no está comprobado.
+
+**Qué haría falta.** Decidir cuál de los dos estados es el bueno. Si es el de
+las migraciones, escribir una que repita en producción los `revoke` de las
+fases 1 y 2. Si es el de producción, dejarlo escrito en una migración para que
+el diff vuelva a salir vacío. Mientras tanto, cualquier `db diff --linked` va a
+traer este ruido, y hay que leerlo sabiendo que está ahí. **No es ese el
+riesgo**: el riesgo es que ese ruido tape algún día un privilegio de verdad
+sobrante.
+
+---
+
 ## ~~Y una decisión que conviene tomar ANTES de la primera pantalla de recetas~~
 
 > **RESUELTA el 2026-08-26.** El modelo de recetas e ingredientes está decidido

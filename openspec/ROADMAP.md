@@ -93,10 +93,17 @@ dos razones: es **la tesis del producto**, lo que hace que Cocinetas no sea otro
 recetario, y merece su propia spec con sus propios escenarios; y la fase 2 ya es
 suficientemente grande sin ella.
 
-- **Tablas**: ninguna nueva. Una vista, que **tiene que declararse
-  `security_invoker = true`**: una vista normal corre con los privilegios de
-  quien la creó y se salta la RLS entera.
-- **Specs**: `recipe-coverage`
+- **Tablas**: ninguna nueva. Una columna, `recipe_ingredients.opcional`, y dos
+  vistas, que **tienen que declararse `security_invoker = true`**: una vista
+  normal corre con los privilegios de quien la creó y se salta la RLS entera.
+
+  La columna es la marca de «perejil para decorar» que la D7 de la fase 1
+  separó de `se_asume` y que la fase 2 no creó porque nada la usaba. Son dos
+  vistas y no una para que la regla de qué cuenta viva en un solo sitio: la de
+  cada línea decide el estado, y la de cada receta solo agrega la primera. Así
+  la lista y el detalle no pueden dar cifras distintas (D1 de
+  `add-recipe-coverage`).
+- **Specs**: `recipe-coverage`, y una regla nueva en `recipes`
 
 ## 4 · Modo cocina
 

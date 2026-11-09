@@ -16,6 +16,21 @@
   margin: 0;
 }
 
+/* El título de los ingredientes y cuánto tienes, en la misma línea mientras
+   quepa y uno bajo otro cuando no. */
+.cabeceraIngredientes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3) 0;
+}
+
+.cabeceraIngredientes > .subtitulo {
+  margin: 0;
+}
+
 .subtitulo {
   margin: 0 0 var(--space-3) 0;
   font-size: 1rem;
@@ -56,6 +71,11 @@
 
 .ingrediente {
   text-transform: capitalize;
+}
+
+/* La etiqueta del estado, empujada al final de la fila. */
+.estado {
+  margin-left: auto;
 }
 
 .paso {

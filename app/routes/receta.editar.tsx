@@ -115,6 +115,7 @@ export async function action({ request, params }: Route.ActionArgs) {
         return guardarLinea(supabase, texto("linea"), {
           ...(datos.has("cantidad") ? { cantidad: texto("cantidad") } : {}),
           ...(datos.has("nota") ? { nota: texto("nota") } : {}),
+          ...(datos.has("opcional") ? { opcional: texto("opcional") === "si" } : {}),
         });
       case "linea-borrar":
         return borrarLinea(supabase, texto("linea"));
@@ -354,6 +355,20 @@ function Linea({ linea }: { linea: LineaReceta }) {
     datos: (valor) => ({ intencion: "linea-guardar", linea: linea.id, nota: valor }),
   });
 
+  /* La casilla pasa por el mismo guardado que los campos de texto, para que su
+     error se quede pegado a la fila y cuente en el indicador global. Pero se
+     envía en cuanto cambia, sin el retardo: marcar una casilla es un cambio
+     entero, no un tecleo a medias que convenga esperar. */
+  const opcional = useGuardadoAlVuelo({
+    clave: `opcional:${linea.id}`,
+    valorInicial: linea.opcional ? "si" : "no",
+    datos: (valor) => ({
+      intencion: "linea-guardar",
+      linea: linea.id,
+      opcional: valor,
+    }),
+  });
+
   return (
     <div className={estilos.cuerpoFila}>
       <div className={estilos.lineaCabecera}>
@@ -390,11 +405,27 @@ function Linea({ linea }: { linea: LineaReceta }) {
         />
       </div>
 
+      {/* «Se puede hacer sin esto». No cuenta para saber si tienes todo, y es de
+          esta línea: el ingrediente sigue igual en el resto del recetario. */}
+      <label className={estilos.opcional}>
+        <input
+          type="checkbox"
+          checked={opcional.valor === "si"}
+          aria-label={`Opcional: ${linea.ingrediente}`}
+          onChange={(e) => {
+            opcional.alCambiar(e.target.checked ? "si" : "no");
+            opcional.alSalir();
+          }}
+        />
+        Opcional
+      </label>
+
       {/* El error se queda pegado a SU fila y no se desvanece: con guardado al
           vuelo, un aviso que pasa por arriba es un aviso que nadie ve. */}
       {borrar.data?.error ? <p className={estilos.error}>{borrar.data.error}</p> : null}
       {cantidad.error ? <p className={estilos.error}>{cantidad.error}</p> : null}
       {nota.error ? <p className={estilos.error}>{nota.error}</p> : null}
+      {opcional.error ? <p className={estilos.error}>{opcional.error}</p> : null}
     </div>
   );
 }

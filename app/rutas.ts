@@ -12,6 +12,11 @@ export const RUTA_INICIO = "/";
 export const RUTA_COCINA = "/cocina";
 export const RUTA_INGREDIENTES = "/ingredientes";
 export const RUTA_RECETAS = "/recetas";
+/* El filtro va en la URL y no en un interruptor con JavaScript: así funciona
+   sin JavaScript, sobrevive a una recarga y se puede enlazar. */
+export const PARAM_SOLO = "solo";
+export const SOLO_EN_CASA = "en-casa";
+export const RUTA_RECETAS_EN_CASA = `${RUTA_RECETAS}?${PARAM_SOLO}=${SOLO_EN_CASA}`;
 
 /* Con parámetro, así que funciones y no constantes. Se construyen aquí y no en
    cada componente para que cambiar la forma de la URL sea un solo sitio. */

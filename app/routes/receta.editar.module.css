@@ -119,6 +119,15 @@
   min-width: 0;
 }
 
+/* Misma forma que las casillas de los pasos: pequeña y al lado del texto. */
+.opcional {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 0.875rem;
+  color: var(--color-neutral-400);
+}
+
 .anadir {
   display: flex;
   gap: var(--space-2);

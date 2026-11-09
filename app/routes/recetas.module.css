@@ -107,3 +107,32 @@
   font-size: 0.875rem;
   margin: 0;
 }
+
+.filtro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+/* La fila de una terminada: el título arriba y lo que tienes debajo, para que
+   un «Faltan: nata y puerro» no empuje el título fuera de la pantalla de un
+   teléfono. */
+.enlaceReceta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: var(--space-8);
+  min-width: 0;
+  /* El subrayado del enlace se propaga a todo lo de dentro y un hijo no lo
+     puede quitar: se quita aquí y se pone solo en el título. */
+  text-decoration: none;
+}
+
+.enlaceReceta > .nombre {
+  text-decoration: underline;
+}
