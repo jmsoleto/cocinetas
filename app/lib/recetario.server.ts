@@ -18,6 +18,9 @@ export type LineaReceta = {
   orden: number;
   cantidad: string | null;
   nota: string | null;
+  /** «Perejil para decorar»: la receta se puede hacer sin él. Es de la línea,
+   *  no del ingrediente, y por eso no es lo mismo que «se da por supuesto». */
+  opcional: boolean;
   ingredienteId: string;
   ingrediente: string;
 };
@@ -47,6 +50,18 @@ export type RecetaResumen = {
   vacia: boolean;
 };
 
+/** Cuánto tienes de una receta. Sale de la vista `recipe_coverage`. */
+export type Cobertura = {
+  /** Ingredientes distintos que de verdad hacen falta: sin los que se dan por
+   *  supuestos ni los opcionales. Puede ser 0, y entonces «Tienes todo». */
+  necesarios: number;
+  tienes: number;
+  faltan: number;
+  faltanNombres: string[];
+};
+
+export type RecetaTerminada = RecetaResumen & { cobertura: Cobertura | null };
+
 /* Una receta entera en UNA sola consulta, no repartida en varias.
  *
  * No es una optimización: es lo que permitirá que la fase 4 cachee la receta
@@ -55,7 +70,7 @@ export type RecetaResumen = {
  * ser barato. Está anotado en la D2 del diseño. */
 const RECETA_COMPLETA = `
   id, titulo, comensales, finalizada_en,
-  recipe_ingredients ( id, orden, cantidad, nota, ingrediente_id,
+  recipe_ingredients ( id, orden, cantidad, nota, opcional, ingrediente_id,
                        ingredients ( nombre ) ),
   steps ( id, orden, texto, step_ingredients ( linea_id ) )
 `;
@@ -100,6 +115,7 @@ export async function leerReceta(
       orden: fila.orden as number,
       cantidad: (fila.cantidad as string | null) ?? null,
       nota: (fila.nota as string | null) ?? null,
+      opcional: fila.opcional === true,
       ingredienteId: fila.ingrediente_id as string,
       ingrediente:
         unaFila<{ nombre: string }>(fila.ingredients)?.nombre ?? "(sin nombre)",
@@ -135,14 +151,38 @@ export async function leerReceta(
  * se busca al abrir la pantalla.
  */
 export async function leerRecetario(supabase: SupabaseClient) {
-  const { data, error } = await supabase
-    .from("recipes")
-    .select(
-      "id, titulo, finalizada_en, actualizado_en, recipe_ingredients(id), steps(id)",
-    )
-    .order("actualizado_en", { ascending: false });
+  /* La cobertura va en una consulta aparte y en paralelo, no embebida: es una
+     vista, y PostgREST no sabe deducir su relación con `recipes`. */
+  const [recetas, coberturas] = await Promise.all([
+    supabase
+      .from("recipes")
+      .select(
+        "id, titulo, finalizada_en, actualizado_en, recipe_ingredients(id), steps(id)",
+      )
+      .order("actualizado_en", { ascending: false }),
+    supabase
+      .from("recipe_coverage")
+      .select("receta_id, necesarios, tienes, faltan, faltan_nombres"),
+  ]);
 
+  const { data, error } = recetas;
   if (error) throw new Error(`No se pudo leer el recetario: ${error.message}`);
+  if (coberturas.error)
+    throw new Error(
+      `No se pudo leer qué tienes de cada receta: ${coberturas.error.message}`,
+    );
+
+  const porReceta = new Map<string, Cobertura>(
+    (coberturas.data ?? []).map((fila) => [
+      fila.receta_id as string,
+      {
+        necesarios: fila.necesarios as number,
+        tienes: fila.tienes as number,
+        faltan: fila.faltan as number,
+        faltanNombres: (fila.faltan_nombres as string[] | null) ?? [],
+      },
+    ]),
+  );
 
   const todas: RecetaResumen[] = (data ?? []).map((fila) => ({
     id: fila.id,
@@ -154,9 +194,81 @@ export async function leerRecetario(supabase: SupabaseClient) {
       comoLista(fila.steps).length === 0,
   }));
 
+  /* Solo las terminadas llevan cobertura: un borrador no se cocina, y un «Tienes
+     todo» sobre líneas a medias prometería algo que no existe.
+     Si una receta terminada no saliera en la vista —no debería: la vista tiene
+     una fila por receta—, se queda sin cobertura y al final de la lista, antes
+     que inventarle un «Tienes todo». */
+  const terminadas: RecetaTerminada[] = todas
+    .filter((r) => r.finalizadaEn !== null)
+    .map((r) => ({ ...r, cobertura: porReceta.get(r.id) ?? null }))
+    .sort(porLoQueFalta);
+
   return {
-    terminadas: todas.filter((r) => r.finalizadaEn !== null),
+    terminadas,
     borradores: todas.filter((r) => r.finalizadaEn === null),
+  };
+}
+
+/* De menos a más ingredientes que faltan. A igualdad, por título en español —el
+   título de una terminada no cambia, porque una terminada no se edita—, y por id
+   si coincide, para que el orden sea siempre el mismo. */
+const titulos = new Intl.Collator("es", { sensitivity: "base" });
+
+function porLoQueFalta(a: RecetaTerminada, b: RecetaTerminada) {
+  return (
+    (a.cobertura?.faltan ?? Number.MAX_SAFE_INTEGER) -
+      (b.cobertura?.faltan ?? Number.MAX_SAFE_INTEGER) ||
+    titulos.compare(a.titulo ?? "", b.titulo ?? "") ||
+    (a.id < b.id ? -1 : a.id > b.id ? 1 : 0)
+  );
+}
+
+/** El estado de una línea frente a la despensa. La regla vive en la vista
+ *  `recipe_line_coverage`; aquí solo se lee. */
+export type EstadoLinea = "tiene" | "falta" | "supuesto" | "opcional";
+
+/**
+ * Lo que tienes de una receta, línea a línea.
+ *
+ * Va aparte de `leerReceta` y no dentro de `RECETA_COMPLETA`, a propósito (D3
+ * del diseño): la receta solo cambia cuando la editas, la cobertura cada vez
+ * que tocas la despensa. La fase 4 guardará la receta en el dispositivo, y no
+ * debe llevarse dentro una cobertura que se queda vieja en cuanto compras algo.
+ */
+export async function leerCoberturaDeReceta(
+  supabase: SupabaseClient,
+  recetaId: string,
+): Promise<{ porLinea: Map<string, EstadoLinea>; cobertura: Cobertura | null }> {
+  const [lineas, total] = await Promise.all([
+    supabase
+      .from("recipe_line_coverage")
+      .select("linea_id, estado")
+      .eq("receta_id", recetaId),
+    supabase
+      .from("recipe_coverage")
+      .select("necesarios, tienes, faltan, faltan_nombres")
+      .eq("receta_id", recetaId)
+      .maybeSingle(),
+  ]);
+
+  if (lineas.error)
+    throw new Error(`No se pudo leer qué tienes de la receta: ${lineas.error.message}`);
+  if (total.error)
+    throw new Error(`No se pudo leer qué tienes de la receta: ${total.error.message}`);
+
+  return {
+    porLinea: new Map(
+      (lineas.data ?? []).map((f) => [f.linea_id as string, f.estado as EstadoLinea]),
+    ),
+    cobertura: total.data
+      ? {
+          necesarios: total.data.necesarios as number,
+          tienes: total.data.tienes as number,
+          faltan: total.data.faltan as number,
+          faltanNombres: (total.data.faltan_nombres as string[] | null) ?? [],
+        }
+      : null,
   };
 }
 
@@ -237,9 +349,10 @@ export async function anadirLinea(
 export async function guardarLinea(
   supabase: SupabaseClient,
   id: string,
-  campos: { cantidad?: string; nota?: string },
+  campos: { cantidad?: string; nota?: string; opcional?: boolean },
 ): Promise<Resultado> {
   const cambios: Record<string, unknown> = {};
+  if (campos.opcional !== undefined) cambios.opcional = campos.opcional;
   if (campos.cantidad !== undefined)
     cambios.cantidad = campos.cantidad.trim() === "" ? null : campos.cantidad.trim();
   if (campos.nota !== undefined)
