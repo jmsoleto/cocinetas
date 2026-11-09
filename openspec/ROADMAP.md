@@ -108,7 +108,7 @@ suficientemente grande sin ella.
   `changes/archive/2026-11-09-add-recipe-coverage/`. Las specs están ya volcadas
   en `specs/recipe-coverage/` y `specs/recipes/`, que son el contrato vigente.
 
-## 4 · Modo cocina
+## 4 · Modo cocina ✓ HECHA
 
 **Qué se entrega.** La pantalla de cocinar: paso a paso, con los ingredientes de
 ese paso al lado, y navegación adelante y atrás para poder moverse por la receta.
@@ -118,6 +118,10 @@ pantalla que solo lee.
 
 - **Tablas**: ninguna. Cero columnas, cero escrituras.
 - **Specs**: `cook-mode`
+- **Change**: `add-cook-mode`. Una sola ruta con el paso en `?paso=`: la receta
+  se lee una vez y cambiar de paso no vuelve al servidor, y los mismos enlaces
+  funcionan sin JavaScript. Lleva además «Antes de empezar», deslizar entre
+  pasos y la pantalla que no se apaga (Wake Lock).
 
 **Es movible.** No depende más que de que existan recetas finalizadas, así que
 puede adelantarse por delante de la 3 si en algún momento interesa más.
